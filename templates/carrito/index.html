@@ -1,434 +1,270 @@
-{% extends 'carrito/tienda.html' %} {% load static %} {% get_media_prefix as
-MEDIA %} {% load cart_tags %} {% block title %}Tienda{% endblock %} {% block
-content %}
+{% extends 'carrito/tienda.html' %}
+{% load static %}
+{% get_media_prefix as MEDIA %}
+{% load cart_tags %}
+{% block title %}Tienda{% endblock %}
+{% block content %}
 
-<!-- CARRUSEL DE FOTOS -->
-<div
-	id="carouselExampleCaptions"
-	class="carousel slide padding_0 mt-5 mb-0"
-	data-ride="carousel"
->
-	<ol class="carousel-indicators">
-		<li
-			data-target="#carouselExampleCaptions"
-			data-slide-to="0"
-			class="active"
-		></li>
-		<li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-		<li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-	</ol>
-	<div class="carousel-inner">
-		<div class="carousel-item active">
-			<img
-				src="{% static '/banner/banner1.png' %}"
-				class="d-block w-100 img-fluid img-responsive"
-				alt="..."
-				style="width: 100%; height: auto"
-			/>
-		</div>
-		<div class="carousel-item">
-			<img
-				src="{% static '/banner/banner2.png' %}"
-				class="d-block w-100 img-fluid img-responsive"
-				alt="..."
-				style="width: 100%; height: auto"
-			/>
-		</div>
-		<div class="carousel-item">
-			<img
-				src="{% static '/banner/banner3.png' %}"
-				class="d-block w-100 img-fluid img-responsive"
-				alt="..."
-				style="width: 100%; height: auto"
-			/>
-		</div>
-	</div>
-</div>
 
-<!-- FIN CARRUSEL -->
-
-<!-- secciones -->
-
-<div class="container-xl pt-xl-5 pb-xl-5 mb-3">
-	<!-- Three columns of text below the carousel -->
-	<div class="row">
-		<div class="col-lg-4 text-justify">
-			<h2 class="display-4 text-info">Shopping</h2>
-			<p>
-				Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.
-				Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus,
-				porta ac consectetur ac, vestibulum at eros.
-			</p>
-			<p>
-				<a
-					class="btn btn-outline-info rounded-0 btn-block"
-					href="{% url 'listado_productos' %}"
-					role="button"
-					>Ver más &raquo;</a
-				>
-			</p>
-		</div>
-		<!-- /.col-lg-4 -->
-		<div class="col-lg-4 text-justify">
-			<h2 class="display-4 text-info">Box Gifts</h2>
-			<p>
-				Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
-				lacinia odio sem nec elit. Cras mattis consectetur purus sit amet
-				fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris
-				condimentum nibh.
-			</p>
-			<p>
-				<a
-					class="btn btn-outline-info rounded-0 btn-block"
-					href="{% url 'listado_combos' %}"
-					role="button"
-					>Ver más &raquo;</a
-				>
-			</p>
-		</div>
-		<!-- /.col-lg-4 -->
-		<div class="col-lg-4 text-justify">
-			<h2 class="display-4 text-info">Gifts Cards</h2>
-			<p>
-				Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas
-				eget quam. Vestibulum id ligula porta felis euismod semper. Fusce
-				dapibus, tellus ac cursus commodo, ut fermentum massa justo sit amet
-				risus.
-			</p>
-			<p>
-				<a
-					class="btn btn-outline-info rounded-0 btn-block"
-					href="{% url 'listado_giftcards' %}"
-					role="button"
-					>Ver más &raquo;</a
-				>
-			</p>
-		</div>
-		<!-- /.col-lg-4 -->
-	</div>
-	<!-- /.row -->
-
-	<hr class="featurette-divider" />
-	<div class="row">
-		<div class="col-12 pb-1 pt-3 text_align_center">
-			<h1 class="display-4 pb-0 text-info">
-				¿Queres saber que producto va con vos ;)?
-			</h1>
-			<h1 class="pb-3 pt-3">
-				Te invitamos a contestar las siguientes preguntas y descubrirlo ❤
-			</h1>
-			<a
-				href="{% url 'test-producto' %}"
-				class="btn btn-outline-info rounded-0 btn-lg mt-3"
-				>Consultar producto recomendado</a
-			>
-		</div>
-	</div>
-
-	<!-- START THE FEATURETTES -->
-</div>
-<div class="container-fluid bg-light padding_0">
-	<div class="container-xl pt-5 pb-5 mt-3 mb-3">
-		<div class="row">
-			<div
-				class="col-12 col-md-12 col-lg-6 pb-1 pt-3 text_align_center border-white border-right border-left"
-			>
-				<h1 class="display-4 pb-0 text-info">Comprar en <br />Maddie</h1>
-				<h1 class="pb-3 pt-3">
-					Haz clic en el siguiente botón y seguí los pasos para hacer tus
-					compras en Maddie ❤
-				</h1>
-				<a
-					href="{% url 'como-comprar' %}"
-					class="btn btn-outline-dark rounded-0 btn-lg mt-3"
-					>Comprar en la tienda</a
-				>
+	<!-- CARRUSEL DE FOTOS -->
+	<div id="carouselExampleCaptions" class="carousel slide padding_0 mt-5 mb-0" data-ride="carousel">
+		<ol class="carousel-indicators">
+			<li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+			<li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+			<li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+		</ol>
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<img src="{% static '/banner/banner1.png' %}" class="d-block w-100 img-fluid img-responsive" alt="..." style="width: 100%; height: auto">
 			</div>
-			<div
-				class="col-12 col-md-12 col-lg-6 pb-1 pt-3 text_align_center border-white border-right border-left"
-			>
-				<h1 class="display-4 pb-0 text-info">Preguntas <br />frecuentes</h1>
-				<h1 class="pb-3 pt-3">
-					Haz clic en el siguiente botón y te detallamos todas la preguntas
-					frecuentes ❤
-				</h1>
-				<a
-					href="{% url 'preguntas-frecuentes' %}"
-					class="btn btn-outline-dark rounded-0 btn-lg mt-3"
-					>Preguntas frecuentes</a
-				>
+			<div class="carousel-item">
+				<img src="{% static '/banner/banner2.png' %}" class="d-block w-100 img-fluid img-responsive" alt="..." style="width: 100%; height: auto">
+			</div>
+			<div class="carousel-item">
+				<img src="{% static '/banner/banner3.png' %}" class="d-block w-100 img-fluid img-responsive" alt="..." style="width: 100%; height: auto">
 			</div>
 		</div>
 	</div>
-</div>
 
-<div class="container-xl pt-5 pb-5">
-	<div class="row featurette">
-		<div class="col-12 col-md-7 order-md-2">
-			<h2 class="featurette-heading text-info">
-				First featurette heading.
-				<span class="text-muted">It’ll blow your mind.</span>
-			</h2>
-			<p class="lead">
-				Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula
-				porta felis euismod semper. Praesent commodo cursus magna, vel
-				scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
-			</p>
-		</div>
-		<div class="col-12 col-md-5 order-md-1">
-			<img
-				src="{% static '/banner/img1.png' %}"
-				class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-				alt="Responsive image"
-				width="100%"
-			/>
-		</div>
-	</div>
+	<!-- FIN CARRUSEL -->
 
-	<hr class="featurette-divider" />
+	<!-- secciones -->
 
-	<div class="row featurette">
-		<div class="col-12 col-md-7 order-md-2">
-			<h2 class="featurette-heading text-info">
-				Oh yeah, it’s that good.
-				<span class="text-muted">See for yourself.</span>
-			</h2>
-			<p class="lead">
-				Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula
-				porta felis euismod semper. Praesent commodo cursus magna, vel
-				scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
-			</p>
-		</div>
-		<div class="col-12 col-md-5 order-md-1">
-			<img
-				src="{% static '/banner/img2.png' %}"
-				class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
-				alt="Responsive image"
-				width="100%"
-			/>
-		</div>
-	</div>
-</div>
-<div class="container-fluid pt-5 bg-light">
-	<div class="row">
-		<div class="col-12 pb-1 pt-3 text_align_center">
-			<h1 class="display-4 pb-0 text-info">Destacados del mes ❤</h1>
-		</div>
-	</div>
-
-	<div class="container-xl mt-3 pb-3">
+	<div class="container-xl pt-xl-5 pb-xl-5 mb-3">
+		<!-- Three columns of text below the carousel -->
 		<div class="row">
-			<div class="col-12">
-				<div class="row">
-					{% for producto in productos_destacados %}
-					<div class="col-12 col-md-6 col-lg-3 col-xl-3">
-						<div
-							class="card rounded-0 shadow-sm"
-							style="width: 100%; margin-bottom: 10%"
-						>
-							<img
-								src="
+			<div class="col-lg-4 text-justify">
+				<h2 class="display-4 text-info">Shopping</h2>
+				<p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies
+					vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+				<p><a class="btn btn-outline-info rounded-0 btn-block" href="{% url 'listado_productos' %}"
+				      role="button">Ver más &raquo;</a></p>
+			</div><!-- /.col-lg-4 -->
+			<div class="col-lg-4 text-justify">
+				<h2 class="display-4 text-info">Box Gifts</h2>
+				<p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras
+					mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+					condimentum nibh.</p>
+				<p><a class="btn btn-outline-info rounded-0 btn-block" href="{% url 'listado_combos' %}" role="button">Ver
+					más &raquo;</a></p>
+			</div><!-- /.col-lg-4 -->
+			<div class="col-lg-4 text-justify">
+				<h2 class="display-4 text-info">Gifts Cards</h2>
+				<p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula
+					porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo,
+					ut fermentum massa justo sit amet risus.</p>
+				<p><a class="btn btn-outline-info rounded-0 btn-block" href="{% url 'listado_giftcards' %}"
+				      role="button">Ver más &raquo;</a></p>
+			</div><!-- /.col-lg-4 -->
+		</div><!-- /.row -->
+
+		<hr class="featurette-divider">
+		<div class="row">
+			<div class="col-12 pb-1 pt-3 text_align_center">
+				<h1 class="display-4 pb-0 text-info">¿Queres saber que producto va con vos ;)?</h1>
+				<h1 class="pb-3 pt-3">Te invitamos a contestar las siguientes preguntas y descubrirlo ❤</h1>
+				<a href="{% url 'test-producto' %}" class="btn btn-outline-info rounded-0 btn-lg mt-3">Consultar
+					producto recomendado</a>
+			</div>
+		</div>
+
+		<!-- START THE FEATURETTES -->
+		</div>
+		<div class="container-fluid bg-light padding_0">
+		<div class="container-xl pt-5 pb-5 mt-3 mb-3">
+			<div class="row">
+			<div class="col-12 col-md-12 col-lg-6 pb-1 pt-3 text_align_center border-white border-right border-left">
+				<h1 class="display-4 pb-0 text-info">Comprar en <br>Maddie</h1>
+				<h1 class="pb-3 pt-3">Haz clic en el siguiente botón y seguí los pasos para hacer tus compras en Maddie
+					❤</h1>
+				<a href="{% url 'como-comprar' %}" class="btn btn-outline-dark rounded-0 btn-lg mt-3">Comprar en la tienda</a>
+			</div>
+			<div class="col-12 col-md-12 col-lg-6 pb-1 pt-3 text_align_center border-white border-right border-left">
+				<h1 class="display-4 pb-0 text-info">Preguntas <br>frecuentes</h1>
+				<h1 class="pb-3 pt-3">Haz clic en el siguiente botón y te detallamos todas la preguntas frecuentes ❤</h1>
+				<a href="{% url 'preguntas-frecuentes' %}" class="btn btn-outline-dark rounded-0 btn-lg mt-3">Preguntas frecuentes</a>
+			</div>
+			</div>
+		</div>
+		</div>
+
+		<div class="container-xl pt-5 pb-5">
+		<div class="row featurette">
+			<div class="col-12 col-md-7 order-md-2">
+				<h2 class="featurette-heading text-info">First featurette heading. <span
+						class="text-muted">It’ll blow your mind.</span></h2>
+				<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis
+					euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus,
+					tellus ac cursus commodo.</p>
+			</div>
+			<div class="col-12 col-md-5 order-md-1">
+				<img src="{% static '/banner/img1.png' %}"
+				     class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+				     alt="Responsive image" width="100%">
+			</div>
+		</div>
+
+		<hr class="featurette-divider">
+
+		<div class="row featurette">
+			<div class="col-12 col-md-7 order-md-2">
+				<h2 class="featurette-heading text-info">Oh yeah, it’s that good. <span
+						class="text-muted">See for yourself.</span></h2>
+				<p class="lead">Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis
+					euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus,
+					tellus ac cursus commodo.</p>
+			</div>
+			<div class="col-12 col-md-5 order-md-1">
+				<img src="{% static '/banner/img2.png' %}"
+				     class="bd-placeholder-img bd-placeholder-img-lg featurette-image img-fluid mx-auto"
+				     alt="Responsive image" width="100%">
+			</div>
+		</div>
+
+	</div>
+	<div class="container-fluid pt-5 bg-light">
+
+		<div class="row">
+			<div class="col-12 pb-1 pt-3 text_align_center">
+				<h1 class="display-4 pb-0 text-info">Destacados del mes ❤</h1>
+			</div>
+		</div>
+
+		<div class="container-xl mt-3 pb-3">
+			<div class="row">
+				<div class="col-12">
+					<div class="row">
+						{% for producto in productos_destacados %}
+							<div class="col-12 col-md-6 col-lg-3 col-xl-3">
+								<div class="card rounded-0 shadow-sm" style="width: 100%; margin-bottom: 10%">
+									<img src="
 
 											{% if producto.imagen1 %}{{ producto.imagen1.url }}{% else %}{% static 'banner/no-disponible.jpg' %}{% endif %}"
-								style="width: 100%"
-								class="card-img-top"
-								alt="{{ producto.nombre }}"
-							/>
-							<div class="card-body">
-								<h3 class="card-title">
-									{{ producto.marca.nombre }} - {{ producto.nombre }}
-								</h3>
-								<p class="card-text">{{ producto.detalle }}</p>
-								<h2 class="card-text">
-									{{ producto.preciofinal|separador|money_format:'$' }}
-								</h2>
-								<div class="row">
-									<div class="col-12 padding_0">
-										<a
-											href="{% url 'detalle_producto' producto.id %}"
-											class="btn btn-sm btn-outline-dark btn-block rounded-0"
-										>
-											Ver más detalles
-										</a>
-									</div>
-								</div>
-							</div>
-							{% if user.is_authenticated %}
-							<div class="card-footer">
-								<div class="row">
-									<div class="col-6 padding_0">
-										<a
-											href="{% url 'add_producto' producto.id %}"
-											class="btn btn-sm btn-block btn-outline-info rounded-0"
-										>
-											Agregar
-											<svg
-												xmlns="http://www.w3.org/2000/svg"
-												width="16"
-												height="16"
-												fill="currentColor"
-												class="bi bi-cart-check"
-												viewBox="0 0 16 16"
-											>
-												<path
-													d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"
-												/>
-												<path
-													d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
-												/>
-											</svg>
-										</a>
-									</div>
-									<div class="col-6 padding_0">
-										<a href="{% url 'agregar_producto_love' producto.id %}">
-											<button
-												id="boton"
-												class="btn-block btn btn-sm btn-pink rounded-0"
-												title="Agregar a Love List"
-											>
-												Lovelist
-												<svg
-													width="1em"
-													height="1em"
-													viewBox="0 0 16 16"
-													fill="hotpink"
-													class="bi bi-suit-heart-fill mi-imagen"
-													xmlns="http://www.w3.org/2000/svg"
-												>
-													<path
-														d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"
-													/>
-												</svg>
-											</button>
-										</a>
-									</div>
-								</div>
-							</div>
+									     style="width:100%;" class="card-img-top"
+									     alt="{{ producto.nombre }}"/>
+									<div class="card-body">
+										<h3 class="card-title">{{ producto.marca.nombre }} - {{ producto.nombre }}</h3>
+										<p class="card-text">{{ producto.detalle }}</p>
+										<h2 class="card-text">{{ producto.preciofinal|separador|money_format:'$' }}</h2>
+										<div class="row">
+											<div class="col-12 padding_0">
+												<a href="{% url 'detalle_producto' producto.id %}"
+												   class="btn btn-sm btn-outline-dark btn-block rounded-0">
+													Ver más detalles
+												</a>
+											</div>
+										</div>
 
-							{% else %}
-							<div class="card-footer text-center">
-								<a
-									tabindex="0"
-									class="btn btn-lg btn-outline-danger rounded-0 border-danger"
-								>
-									<svg
-										width="1em"
-										height="1em"
-										viewBox="0 0 16 16"
-										class="bi bi-bag-x-fill"
-										fill="currentColor"
-										xmlns="http://www.w3.org/2000/svg"
-									>
-										<path
-											fill-rule="evenodd"
-											d="M5.5 3.5a2.5 2.5 0 0 1 5 0V4h-5v-.5zm6 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM6.854 8.146a.5.5 0 1 0-.708.708L7.293 10l-1.147 1.146a.5.5 0 0 0 .708.708L8 10.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 10l1.147-1.146a.5.5 0 0 0-.708-.708L8 9.293 6.854 8.146z"
-										/>
-									</svg>
-								</a>
+									</div>
+									{% if user.is_authenticated %}
+										<div class='card-footer'>
+											<div class="row">
+												<div class="col-6 padding_0">
+													<a href="{% url 'add_producto' producto.id %}"
+													   class="btn btn-sm btn-block btn-outline-info rounded-0">
+														Agregar
+														<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+														     fill="currentColor" class="bi bi-cart-check"
+														     viewBox="0 0 16 16">
+															<path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+															<path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+														</svg>
+													</a>
+												</div>
+												<div class="col-6 padding_0">
+													<a href="{% url 'agregar_producto_love' producto.id %}">
+														<button id="boton"
+														        class="btn-block btn btn-sm btn-pink rounded-0"
+														        title="Agregar a Love List">
+															Lovelist
+															<svg width="1em" height="1em" viewBox="0 0 16 16"
+															     fill="hotpink"
+															     class="bi bi-suit-heart-fill mi-imagen"
+															     xmlns="http://www.w3.org/2000/svg">
+																<path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+															</svg>
+														</button>
+													</a>
+												</div>
+											</div>
+										</div>
+
+									{% else %}
+										<div class='card-footer text-center'>
+											<a tabindex="0"
+											   class="btn btn-lg btn-outline-danger rounded-0 border-danger">
+												<svg width="1em" height="1em" viewBox="0 0 16 16"
+												     class="bi bi-bag-x-fill"
+												     fill="currentColor"
+												     xmlns="http://www.w3.org/2000/svg">
+													<path fill-rule="evenodd"
+													      d="M5.5 3.5a2.5 2.5 0 0 1 5 0V4h-5v-.5zm6 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM6.854 8.146a.5.5 0 1 0-.708.708L7.293 10l-1.147 1.146a.5.5 0 0 0 .708.708L8 10.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 10l1.147-1.146a.5.5 0 0 0-.708-.708L8 9.293 6.854 8.146z"/>
+												</svg>
+											</a>
+										</div>
+									{% endif %}
+								</div>
 							</div>
-							{% endif %}
-						</div>
+						{% empty %}
+							<div class="col-12 mb-xl-5 mt-xl-5">
+								<div class="d-block alert alert-info text-info text_align_center">
+									<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+									     class="bi bi-emoji-dizzy-fill" viewBox="0 0 16 16">
+										<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM4.146 5.146a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 1 1 .708.708l-.647.646.647.646a.5.5 0 1 1-.708.708L5.5 7.207l-.646.647a.5.5 0 1 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 0-.708zm5 0a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 1 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 0-.708zM8 13a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+									</svg>
+									<br>
+									No existen Productos disponibles por el momento.
+								</div>
+							</div>
+						{% endfor %}
 					</div>
-					{% empty %}
-					<div class="col-12 mb-xl-5 mt-xl-5">
-						<div class="d-block alert alert-info text-info text_align_center">
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								width="30"
-								height="30"
-								fill="currentColor"
-								class="bi bi-emoji-dizzy-fill"
-								viewBox="0 0 16 16"
-							>
-								<path
-									d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM4.146 5.146a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 1 1 .708.708l-.647.646.647.646a.5.5 0 1 1-.708.708L5.5 7.207l-.646.647a.5.5 0 1 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 0-.708zm5 0a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 1 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 0-.708zM8 13a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"
-								/>
-							</svg>
-							<br />
-							No existen Productos disponibles por el momento.
-						</div>
-					</div>
-					{% endfor %}
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
-<div class="container-xl pt-5 pb-5">
-	<div class="row border-light mt-3">
-		<div
-			class="col-12 col-md-12 col-lg-6 pb-1 pt-3 text_align_center border-light border-right"
-		>
-			<h1 class="display-4 pb-0 text-info">Realizar una consulta</h1>
-			<h1 class="pb-3 pt-3">
-				Haz clic en el siguiente botón, mandanos tu mensajito y te responderemos
-				❤
-			</h1>
-			<a
-				href="{% url 'consulta-usuario' %}"
-				class="btn btn-outline-dark rounded-0 btn-lg mt-3"
-				>Hacer una consulta</a
-			>
+	<div class="container-xl pt-5 pb-5">
+		<div class="row border-light  mt-3">
+			<div class="col-12 col-md-12 col-lg-6 pb-1 pt-3 text_align_center border-light border-right">
+				<h1 class="display-4 pb-0 text-info">Realizar una consulta</h1>
+				<h1 class="pb-3 pt-3">Haz clic en el siguiente botón, mandanos tu mensajito y te responderemos
+					❤</h1>
+				<a href="{% url 'consulta-usuario' %}" class="btn btn-outline-dark rounded-0 btn-lg mt-3">Hacer una consulta</a>
+			</div>
+			<div class="col-12 col-md-12 col-lg-6  pb-1 pt-3 text_align_center border-light border-left">
+				<h1 class="display-4 pb-0 text-info">Noticias de <br>nuevos pedidos</h1>
+				<h1 class="pb-3 pt-3">Haz clic en el siguiente botón para contactarte y saber que pedidos nuevos tendremos
+					❤</h1>
+				<a href="{% url 'proximos-pedidos' %}" class="btn btn-outline-dark rounded-0 btn-lg mt-3">Ver las novedades</a>
+			</div>
 		</div>
-		<div
-			class="col-12 col-md-12 col-lg-6 pb-1 pt-3 text_align_center border-light border-left"
-		>
-			<h1 class="display-4 pb-0 text-info">Noticias de <br />nuevos pedidos</h1>
-			<h1 class="pb-3 pt-3">
-				Haz clic en el siguiente botón para contactarte y saber que pedidos
-				nuevos tendremos ❤
-			</h1>
-			<a
-				href="{% url 'proximos-pedidos' %}"
-				class="btn btn-outline-dark rounded-0 btn-lg mt-3"
-				>Ver las novedades</a
-			>
+		<!-- /END THE FEATURETTES -->
+
+	</div>
+
+	<div class="jumbotron container-fluid pl-0 pr-0 rounded-0 mb-0 text_align_center bg-light">
+		<div class="container-xl">
+			<h1 class="display-4 full" style="color: #3BA5AD">#QuedateEnCasa ❤</h1>
+			<p class="lead text-info">¡Sí! Nuestra tienda sigue funcionando, podés comprar fácilmente sin moverte
+				de tu casa. <br>En Maddie, la salud y bienestar es nuestra prioridad.</p>
+			<hr class="my-4 bg-light">
+			<p class="text-justify pb-0 mb-0 padding_0" style="color: black">Agradecemos tu comprensión y confianza. De
+				nuestro lado estamos haciendo todo de la
+				mejor manera posible, siguiendo todos los cuidados y recomendaciones del Ministerio de Salud de la
+				Nación, para continuar
+				ofreciendote la mejor experiencia y productos de calidad para vos y tu familia.</p>
+			<p class="text-info padding_0">#QuedateEnCasa #CompráOnline #CompráEnMaddie #LoveMakeup</p>
+			<p class="lead">
+				<a class="btn btn-outline-info rounded-0 btn-block" href="{% url 'listado_productos' %}" role="button">Añadir
+					productos a mi carrito</a>
+			</p>
 		</div>
 	</div>
-	<!-- /END THE FEATURETTES -->
-</div>
 
-<div
-	class="jumbotron container-fluid pl-0 pr-0 rounded-0 mb-0 text_align_center bg-light"
->
-	<div class="container-xl">
-		<h1 class="display-4 full" style="color: #3ba5ad">#QuedateEnCasa ❤</h1>
-		<p class="lead text-info">
-			¡Sí! Nuestra tienda sigue funcionando, podés comprar fácilmente sin
-			moverte de tu casa. <br />En Maddie, la salud y bienestar es nuestra
-			prioridad.
-		</p>
-		<hr class="my-4 bg-light" />
-		<p class="text-justify pb-0 mb-0 padding_0" style="color: black">
-			Agradecemos tu comprensión y confianza. De nuestro lado estamos haciendo
-			todo de la mejor manera posible, siguiendo todos los cuidados y
-			recomendaciones del Ministerio de Salud de la Nación, para continuar
-			ofreciendote la mejor experiencia y productos de calidad para vos y tu
-			familia.
-		</p>
-		<p class="text-info padding_0">
-			#QuedateEnCasa #CompráOnline #CompráEnMaddie #LoveMakeup
-		</p>
-		<p class="lead">
-			<a
-				class="btn btn-outline-info rounded-0 btn-block"
-				href="{% url 'listado_productos' %}"
-				role="button"
-				>Añadir productos a mi carrito</a
-			>
-		</p>
+	<div class="container-fluid padding_0 shadow">
+		<img src="{% static '/banner/banner4.png' %}" class="img-fluid shadow" alt="Responsive image" width="100%">
 	</div>
-</div>
 
-<div class="container-fluid padding_0 shadow">
-	<img
-		src="{% static '/banner/banner4.png' %}"
-		class="img-fluid shadow"
-		alt="Responsive image"
-		width="100%"
-	/>
-</div>
+	<!--Fin secciones-->
 
-<!--Fin secciones-->
 
 {% endblock %}
