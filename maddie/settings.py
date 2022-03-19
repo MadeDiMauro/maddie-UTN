@@ -194,9 +194,9 @@ AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBacke
 
 STATIC_URL = '/static/'
 
-""" STATICFILES_DIRS = [
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "statics")
-]  """
+] 
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
