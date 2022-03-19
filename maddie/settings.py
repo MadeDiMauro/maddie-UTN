@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
+import psycopg2
+import dj_database_url
 from pathlib import Path
 from .db import POSTGRESQL
 from django.contrib.messages import constants as message_constants
@@ -121,6 +123,12 @@ WSGI_APPLICATION = 'maddie.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = POSTGRESQL
+DATABASE_URL = os.environ['DATABASE_URL']
+
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 
 # Password validation
