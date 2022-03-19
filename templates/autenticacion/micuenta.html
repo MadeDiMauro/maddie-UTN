@@ -1,0 +1,183 @@
+{% extends 'carrito/tienda.html' %}
+{% load static %}
+{% load cart_tags %}
+{% block title %}Mi cuenta{% endblock %}
+
+
+{% block content %}
+	<div class="card rounded-0 mt-5 border-0" >
+		<img src="{% static '/banner/bannerGenerico.png' %}" style="width: 100%; height: auto" class="card-img rounded-0" alt="...">
+		<div class="card-img-overlay rounded-0 d-none d-sm-none d-md-none d-lg-none d-xl-block">
+			<h5 class="display-3" style="color: white;">Mi cuenta</h5>
+		</div>
+		<div class="card-img-overlay rounded-0 d-none d-sm-none d-md-block d-lg-block d-xl-none">
+			<h5 class="display-4" style="color: white;">Mi cuenta</h5>
+		</div>
+		<div class="card-img-overlay rounded-0 d-block d-sm-block d-md-none d-lg-none d-xl-none">
+			<h1 style="color: white;">Mi cuenta</h1>
+		</div>
+	</div>
+	<nav aria-label="breadcrumb rounded-0" class="padding_0">
+		<ol class="breadcrumb rounded-0">
+			<li class="breadcrumb-item"><a href="{% url 'carrito' %}">Inicio</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Mi cuenta</li>
+		</ol>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				{% include 'mensajes/messages.html' %}
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid margin-bottom_30 margin-top_20 padding_left_right">
+		<div class="row">
+			<div class="col-12 col-xl-6"><h1 class="left" style="color: #262e41">¡Bienvenido/a {{ user.username }} ❤ a Maddie Makeup! </h1></div>
+			<div class="col-12 col-xl-6 text_align_right"><a href="{% url 'salir' %}"><button class="btn btn-outline-dark rounded-0 border-info">Cerrar sesión</button></a></div>
+		</div>
+	</div>
+
+
+
+	<div class="container-fluid shadow-sm margin-bottom_30">
+		<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+			<li class="flex-sm-fill text-sm-center nav-link">
+				<a class="nav-link active btn-info rounded-0 border-info" data-toggle="tab" href="#mis-datos" role="tab"  aria-controls="mis-datos" aria-selected="true">Mis datos</a>
+			</li>
+			<li class="flex-sm-fill text-sm-center nav-link">
+				<a class="nav-link btn-info rounded-0 border-info" data-toggle="tab" href="#mis-deseados" role="tab">Mis deseados</a>
+			</li>
+			<li class="flex-sm-fill text-sm-center nav-link">
+				<a class="nav-link btn-info rounded-0 border-info" data-toggle="tab" href="#mis-pedidos" role="tab">Mis pedidos</a>
+			</li>
+			<li class="flex-sm-fill text-sm-center nav-link">
+				<a class="nav-link btn-info rounded-0 border-info" data-toggle="tab" href="#mis-consultas" role="tab">Mis consultas
+					{% if cantidar >= 1 %}
+						<span class="badge border bg-light text-info border-info" style="font-family: Raleway, sans-serif">{{ cantidar }}</span>
+					{% endif %}
+				</a>
+			</li>
+		</ul>
+
+
+
+		<div class="tab-content" id="pills-tabContent">
+
+			<div class="tab-pane fade show active" id="mis-datos" role="tabpanel" aria-labelledby="mis-datos">
+				<div class="container-xl margin-top_20 margin-bottom_30">
+					{% for datos in datos_usuario %}
+						<div class="row">
+							<div class="col"><h1 style="color: #138496">Información de cuenta ❤</h1><hr style="background-color: #138496; height: border-box"></div>
+						</div>
+						<div class="row text_align_center padding_0 margin-bottom_10">
+							<div class="col-12 col-lg-3"><p>Nombre de usuario: <br><i>{{ datos.usuario.username }}</i></p><br>
+							<p>Documento de identidad: <br><i>{{ datos.dni }}</i></p>
+							</div>
+							<div class="col-12 col-lg-3"><p>Nombre y apellido: <br><i>{{ datos.usuario.first_name }} {{ datos.usuario.last_name }}</i></p><br>
+							<p><i>Tipo de contribuyente: <br>{{ datos.tipo_usuario|titulo }}</i></p>
+							</div>
+							<div class="col-12 col-lg-3"><p>Email: <br><i>{{ datos.usuario.email }}</i></p><br>
+							<p>Ubicación: <br> <i>{{ datos.ciudad }}, {{ datos.provincia }}</i></p>
+							</div>
+							<div class="col-12 col-lg-3">
+								<div class="d-block d-sm-block d-md-block d-lg-none d-xl-none">
+								<p>Foto de perfil</p>
+								<img class="img-thumbnail thumbnail rounded-0"
+							                        src="{% if datos.fotoperfil %}{{ datos.fotoperfil.url }}
+														 {% else %}
+							                                {% if datos.sexo == 'femenino' %}{% static 'banner/avatar-mujer.png' %}{% else %}
+							                                {% if datos.sexo == 'masculino' %}{% static 'banner/avatar-hombre.png' %}{% else %}
+															{% static 'banner/avatar-otro.png' %}{% endif %}{% endif %}{% endif %}" width="30%">
+								</div>
+								<div class="d-none d-sm-none d-md-none d-lg-block d-xl-block">
+								<p>Foto de perfil</p>
+								<img class="img-thumbnail thumbnail rounded-0"
+							                        src="{% if datos.fotoperfil %}{{ datos.fotoperfil.url }}
+														 {% else %}
+							                                {% if datos.sexo == 'femenino' %}{% static 'banner/avatar-mujer.png' %}{% else %}
+							                                {% if datos.sexo == 'masculino' %}{% static 'banner/avatar-hombre.png' %}{% else %}
+															{% static 'banner/avatar-otro.png' %}{% endif %}{% endif %}{% endif %}" width="60%">
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12 text_align_right">
+								<a href="{% url 'editar_cuenta' datos.id %}" class="btn-outline-info btn-sm rounded-0">Editar
+									datos del perfil</a>
+								<a href="{% url 'editar_datos_inicio' datos.usuario.id %}"
+								   class="btn-outline-info btn-sm rounded-0">Editar datos de sesión</a>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col"><h1 style="color: #138496">Libreta de direcciones ❤</h1><hr style="background-color: #138496; height: border-box"></div>
+						</div>
+						{% for direccion in DIRECCIONES %}
+							<div class="row">
+								<div class="col">
+									{% if direccion.destacada == True %}
+										<p>Dirección principal</p>
+									{% else %}
+										<p>Dirección secundaria</p>
+									{% endif %}
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<p class="font-italic">{{ direccion.direccion }} {{ direccion.numero }}. {{ direccion.piso_departamento }}, {{ direccion.ciudad }}, {{ direccion.provincia }}. Celular de contacto: {{ direccion.telefono }}</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col align-content-end">
+									<a href="{% url 'editar_direccion' direccion.id %}" class="btn-outline-info btn-sm rounded-0">Editar dirección</a>
+								</div>
+							</div>
+							<hr>
+						{% empty %}
+							<div class="row">
+								<div class="col">
+									<div class="alert alert-info">No existen direcciones en la libreta</div>
+								</div>
+							</div>
+						{% endfor %}
+						<div class="row">
+							<div class="col text_align_right"><a href="{% url 'crear_direccion' %}" class="btn-outline-info btn-sm rounded-0">Crear nueva dirección</a></div>
+						</div>
+
+					{% empty %}
+						<div class="container-fluid margin-bottom_30 margin-top_30">
+							<div class="alert alert-light text_align_center" role="alert" style="padding-top: 5%; padding-bottom: 5%">
+								<h1 class="alert-heading display-4" style="color: #138496; font-family: Raleway, sans-serif">Información importante ❤</h1>
+								<p style="font-family: Raleway, sans-serif">Para poder comprar por primera vez, te vamos a molestar un ratito y pedirte que completes un formulario con tus datos personales.
+									Pedimos esta información para poder generar la orden de compra correspondiente :) Muchas gracias!</p>
+								<p class="mb-0">Haz clic en el siguiente botón ;)</p>
+								<hr>
+								<p class="mb-0"><a href="{% url 'completar_cuenta' %}">
+									<button class="btn btn-outline-info btn-block rounded-0">Formulario a completar</button>
+								</a></p>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+
+
+			<div class="tab-pane fade" id="mis-deseados" role="tabpanel">
+				{% include 'lovelist/listado.html' %}
+			</div>
+
+
+			<div class="tab-pane fade" id="mis-pedidos" role="tabpanel">
+				{% include 'pedidos/listado/listado.html' %}
+			</div>
+
+
+			<div class="tab-pane fade" id="mis-consultas" role="tabpanel">
+				<div class="col-12">{% include 'consultas/listado-consultas.html' %}</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

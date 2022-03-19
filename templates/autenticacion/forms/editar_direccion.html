@@ -1,0 +1,24 @@
+{% extends 'carrito/tienda.html' %}
+
+{% block title %}Editar direccion{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class="shadow-none mt-5 pt-5 pb-5 mb-5 bg-light rounded-0 pl-5">
+		<h1 class="display-4">Editar dirección</h1>
+	</div>
+	{% block alerta %}
+		{% include 'mensajes/messages.html' %}
+	{% endblock %}
+	<div class="container-xl mb-5">
+		<form method="post" action="" class="mt-2" autocomplete="off">
+			{% csrf_token %}
+			{{ form|crispy }}
+			<br>
+			<button type="submit" class="btn btn-outline-info rounded-0">Guardar</button>
+		</form>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'carrito/tienda.html' %}
+
+{% block title %}Completar datos de cuenta{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container-fluid">
+	<div class="shadow-none mt-5 pt-5 pb-5 mb-5 bg-light rounded-0 pl-5">
+		<h1 class="display-4">Completar información personal</h1>
+	</div>
+	{% block alerta %}
+		{% include 'mensajes/messages.html' %}
+	{% endblock %}
+	<div class="container-xl mb-5">
+		<label>Nombre de usuario</label>
+		<input class="form-control d-block mb-3" type="text" disabled value="{{ usuario.username }}">
+		<label>Nombre</label>
+		<input class="form-control d-block mb-3" type="text" disabled value="{{ usuario.first_name }}">
+		<label>Apellido</label>
+		<input class="form-control d-block mb-3" type="text" disabled value="{{ usuario.last_name }}">
+		<label>Email</label>
+		<input class="form-control d-block mb-3" type="text" disabled value="{{ usuario.email }}">
+		<form method="post" action="" class="mt-2" autocomplete="off"  enctype="multipart/form-data">
+			{% csrf_token %}
+			{{ form|crispy }}
+			<label>* Campos requeridos</label>
+			<br>
+			<button type="submit" class="btn btn-outline-info rounded-0">Guardar</button>
+		</form>
+
+	</div>
+</div>
+{% endblock %}

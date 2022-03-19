@@ -1,0 +1,315 @@
+{% extends 'pedidos/checkout_base.html' %}
+{% load cart_tags %}
+{% load static %}
+{% block title %}Estado del pedido{% endblock %}
+
+{% block content %}
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+	<!-- Custom styles for this template -->
+	<link href="{% static 'css/form-validation.css' %}" rel="stylesheet">
+
+
+
+	<div class="container-xl p-5 alert rounded-0 border-0 alert-info bg-white shadow">
+		<div class="container-xl">
+			<div class="row">
+			</div>
+			<div class="row mb-3 text_align_center">
+			{% if pedido.estado != 'cancelado' %}
+				{% if pedido.pago.confirmado == True %}
+					<div class="col-3 bg-info pt-2 shadow"><h1 class="text-white font-weight-bold">✓ Pedido pago</h1></div>
+				{% else %}
+					<div class="col-3 bg-white pt-2"><h1 class="text-info">Pedido pago</h1></div>
+				{% endif %}
+
+				{% if pedido.estado_armado == 'preparado' %}
+					<div class="col-3 bg-info pt-2 shadow"><h1 class="text-white font-weight-bold">✓ Pedido armado</h1></div>
+				{% else %}
+					<div class="col-3 bg-white pt-2"><h1 class="text-info">Pedido armado</h1></div>
+				{% endif %}
+
+				{% if pedido.envio.estado == True and pedido.envio.codigo_seguimiento != None %}
+					<div class="col-3 bg-info pt-2 shadow"><h1 class="text-white font-weight-bold">✓ Pedido enviado</h1></div>
+				{% else %}
+					<div class="col-3 bg-white pt-2"><h1 class="text-info">Pedido enviado</h1></div>
+				{% endif %}
+
+				{% if pedido.recibido == True %}
+					<div class="col-3 bg-info pt-2 shadow"><h1 class="text-white font-weight-bold">✓ Pedido recibido</h1></div>
+				{% else %}
+					<div class="col-3 bg-white pt-2"><h1 class="text-info">Pedido recibido</h1></div>
+				{% endif %}
+			{% else %}
+					<div class="col-12 bg-danger pt-3 shadow-sm"><h1 class="text-white font-weight-bold">¡Pedido cancelado!</h1></div>
+			{% endif %}
+			</div>
+			{% if pedido.estado != 'cancelado' %}
+				<div class="row mt-0 pt-2 text_align_center">
+					{% if pedido.pago.confirmado == True %}
+						<div class="col-3 bg-info pt-2 pb-1 shadow"><p class="text-white">✓ Completo</p></div>
+					{% else %}
+						<div class="col-3 bg-white pt-2 pb-1"><p class="text-dark">Pendiente</p></div>
+					{% endif %}
+
+					{% if pedido.estado_armado == 'preparado' %}
+						<div class="col-3 bg-info pt-2 pb-1 shadow"><p class="text-white">✓ Completo</p></div>
+					{% else %}
+						<div class="col-3 bg-white pt-2 pb-1"><p class="text-dark">Pendiente</p></div>
+					{% endif %}
+
+					{% if pedido.envio.estado == True and pedido.envio.codigo_seguimiento != None %}
+						<div class="col-3 bg-info pt-2 pb-1 shadow"><p class="text-white">✓ Completo</p></div>
+					{% else %}
+						<div class="col-3 bg-white pt-2 pb-1"><p class="text-dark">Pendiente</p></div>
+					{% endif %}
+
+					{% if pedido.recibido == True %}
+						<div class="col-3 bg-info pt-2 pb-1 shadow"><p class="text-white">✓ Completo</p></div>
+					{% else %}
+						<div class="col-3 bg-white pt-2 pb-1"><p class="text-dark">Pendiente</p></div>
+					{% endif %}
+				</div>
+				<div class="row text_align_center border-top border-info">
+					<div class="col-12">
+						<p>En esta sección se detalla el resumen de su pedido y los pasos a completar</p>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	</div>
+
+
+	<div class="container-xl padding_left_right">
+		{% include 'mensajes/messages.html' %}
+	</div>
+	{% if pedido.estado == 'cancelado' %}
+		<div class="container-xl bg-white border border-danger p-5 margin-bottom_20 margin-top_10 rounded-0 shadow">
+	{% else %}
+		<div class="container-xl bg-white p-5 margin-bottom_20 margin-top_10 rounded-0 shadow">
+	{% endif %}
+		{% if pedido.estado == 'cancelado' %}
+		<div class="row text_align_center">
+			<div class="col-12">
+				<div class="alert-danger alert">El pedido que está visualizando fué cancelado anteriormente</div>
+			</div>
+		</div>
+		{% endif %}
+
+		<div class="row text_align_center">
+			<div class="col-12">
+				<h1 class="display-4 font-weight-bold text-info">Pedido N° {{ pedido.id }}</h1>
+			</div>
+			<div class="col-12 mt-3">
+				<h1 class="text-secondary font-weight-bold">Datos del usuario</h1><hr>
+			</div>
+			<div class="col-12">
+				<p>{{ pedido.usuario.first_name }}, {{ pedido.usuario.last_name }}. Email: {{ pedido.usuario.email }}</p><hr>
+			</div>
+			<div class="col-12">
+				<p class="text-info font-weight-bold">Dirección del envío</p><hr>
+			</div>
+			<div class="col-12">
+				<p>{{ pedido.envio.direccion }}. {{ pedido.envio.ciudad }}, {{ pedido.envio.provincia }}. Celular de contacto: {{ pedido.envio.celular }}</p><hr>
+			</div>
+		</div>
+
+		{% if pedido.pago.confirmado == True and pedido.pago.estado == 'aprobado' %}
+			<div class="row bg-white pt-3 mt-3 text_align_center">
+				<div class="col-12 mb-2">
+					<h1 class="font-weight-bold text-secondary">Datos del pago</h1><hr>
+				</div>
+				<div class="col-3">
+					<p class="text-info mb-0 font-weight-bold">Forma</p>
+				</div>
+				<div class="col-3">
+					<p class="text-info mb-0 font-weight-bold">Tipo</p>
+				</div>
+				<div class="col-3">
+					<p class="text-info mb-0 font-weight-bold">Fecha</p>
+				</div>
+				<div class="col-3">
+					<p class="text-info mb-0 font-weight-bold">Estado</p>
+				</div>
+				<div class="col-3">
+					<p class="text-info mb-0">
+						{% if pedido.pago.formapago == 'mercadopago' %}
+							Mercado Pago
+						{% endif %}
+						{% if pedido.pago.formapago == 'transferencia' %}
+							Transferencia
+						{% endif %}
+						{% if pedido.pago.formapago == 'efectivo' %}
+							Efectivo
+						{% endif %}
+					</p>
+				</div>
+				<div class="col-3">
+					<p class="text-info mb-0">
+						{% if pedido.pago.tipopago == 'efectivo'%}
+							Efectivo
+						{% endif %}
+						{% if pedido.pago.tipopago == 'cbu'%}
+							Transferencia por CBU
+						{% endif %}
+						{% if pedido.pago.tipopago == 'credit_card'%}
+							Tarjeta de crédito
+						{% endif %}
+						{% if pedido.pago.tipopago == 'debit_card'%}
+							Tarjeta de débito
+						{% endif %}
+						{% if pedido.pago.tipopago == 'prepaid_card'%}
+							Tarjeta prepaga
+						{% endif %}
+					</p>
+				</div>
+				<div class="col-3">
+					<p class="text-info mb-0">{{ pedido.pago.fechapago }}</p>
+				</div>
+				<div class="col-3">
+					<p class="text-info mb-0">{{ pedido.pago.estado|titulo }}</p>
+				</div>
+			</div>
+		{% endif %}
+
+		<div class="row text_align_center">
+			<div class="col-12 mt-5">
+				<h1 class="text-secondary font-weight-bold">Carrito de compras</h1><hr>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-6">
+				<p class="text-info font-weight-bold">Detalles del pedido</p><hr>
+
+				{% for value in detallepedido %}
+					{% if value.tipo_detalle == 'producto' %}
+						<p class="pb-0">{{ value.producto.nombre }} x {{ value.cantidad }}. Subtotal: {{ value.subtotal|separador|money_format:"$" }}</p>
+					{% endif %}
+					{% if value.tipo_detalle == 'combo' %}
+						<p class="pb-0">{{ value.combo.nombre }} x {{ value.cantidad }}. Subtotal: {{ value.subtotal|separador|money_format:"$" }}</p>
+					{% endif %}
+					{% if value.tipo_detalle == 'giftcard' %}
+						<p class="pb-0">{{ value.giftcard.nombre }} x {{ value.cantidad }}. Subtotal: {{ value.subtotal|money_format:"$" }}</p>
+					{% endif %}
+				{% endfor %}
+
+			</div>
+			<div class="col-6">
+				{% if pedido.codigo_descuento != None %}
+					<div class="col-12 m-0">
+						<p class="text-info font-weight-bold">Código de descuento</p><hr>
+					</div>
+					<div class="col-12 m-0">
+						{{ pedido.codigo_descuento.porcentaje }}% de descuento. Valor del descuento: - ${{ pedido.codigo_descuento.descuento_aplicado|separador }}
+					</div>
+					<hr>
+				{% endif %}
+				{% if detalle_giftcard != None %}
+					<div class="col-12 m-0">
+						<p class="text-info font-weight-bold">Giftcard</p><hr>
+					</div>
+					<div class="col-12 m-0">
+						Número del giftcard: {{ pedido.giftcard_descuento.nro_tarjeta }}, el descuento es de: - {{ pedido.giftcard_descuento.valor_descuento|separador|money_format:"$" }}
+					</div>
+					<hr>
+				{% endif %}
+				<div class="col-12 m-0">
+					<p class="text-info font-weight-bold">Envio</p><hr>
+				</div>
+				<div class="col-12 m-0">
+					Por {{ pedido.envio.transporte.nombre }}, el precio envio es de: {{ pedido.envio.precio_envio|separador|money_format:'$' }}, plazo de entrega estimado: {{ pedido.envio.transporte.plazo_entrega }}
+				</div>
+			</div>
+		</div>
+
+
+		<div class="row bg-light pt-3 mt-3 text_align_center">
+			<div class="col-6">
+				<h1 class="font-weight-bold text-info">Total del pedido</h1>
+			</div>
+			<div class="col-6">
+				<h1 class="font-weight-bold text-info">
+					{{ pedido.montofinal|separador|money_format:'$' }}
+				</h1>
+			</div>
+		</div>
+
+		{% if pedido.envio.estado == True and pedido.envio.codigo_seguimiento != None %}
+		<div class="row bg-info pt-3 mt-3 text_align_center">
+			<div class="col-6">
+				<h1 class="font-weight-bold text-white">Código de seguimiento del envio:</h1>
+			</div>
+			<div class="col-6">
+				<h1 class="font-weight-bold text-white">
+				    Nro {{ pedido.envio.codigo_seguimiento }}
+				</h1>
+			</div>
+		</div>
+		{% endif %}
+		{% if request.user.is_authenticated %}
+			{% if pedido.pago.confirmado == False and pedido.pago.estado == 'pendiente' and pedido.estado == 'pendiente' %}
+				<div class="row pt-3 mt-3 text_align_center">
+					<div class="col-6">
+						<a href="{% url 'cancelar-pedido' pedido.id %}" class="btn btn-info rounded-0 btn-block">Cancelar pedido</a>
+					</div>
+					{% if pedido.pago.formapago == 'mercadopago' %}
+						{% if pedido.pago.url_mp == None %}
+							<div class="col-6">
+								<a href="{% url 'mercadopago' %}" class="btn btn-primary rounded-0 btn-block">Pagar pedido por Mercado pago</a>
+							</div>
+						{% else %}
+							<div class="col-6">
+								<a href="{{ pedido.pago.url_mp }}" class="btn btn-primary rounded-0 btn-block">Pagar pedido por Mercado pago</a>
+							</div>
+						{% endif %}
+					{% else %}
+						<div class="col-6">
+							<a href="{% url 'mercadopago' %}" class="btn btn-primary rounded-0 btn-block">Pagar pedido por Mercado pago</a>
+						</div>
+					{% endif %}
+				</div>
+			{% endif %}
+		{% else %}
+			{% if pedido.pago.confirmado == False and pedido.pago.estado == 'pendiente' and pedido.estado == 'pendiente' %}
+			<div class="row pt-3 mt-3 text_align_center">
+					<div class="col-6">
+						<button href="#" disabled class="btn btn-info rounded-0 btn-block">Cancelar pedido</button>
+					</div>
+					<div class="col-6">
+						<button href="#" disabled class="btn btn-primary rounded-0 btn-block">Pagar pedido por Mercado pago</button>
+					</div>
+					<div class="col-12">
+						<small>Para poder cancelar o pagar el pedido debe iniciar sesión en el sitio web</small>
+					</div>
+			</div>
+			{% endif %}
+		{% endif %}
+		{% if request.user.is_authenticated %}
+		<div class="row mt-3">
+			<div class="col-12 padding_0">
+				<a href="{% url 'mi_cuenta' %}" class="btn btn-light border-0 rounded-0 btn-block">Ir a mi cuenta</a>
+			</div>
+		</div>
+		{% endif %}
+		<div class="row mt-3">
+			<div class="col-12 padding_0">
+				<a href="{% url 'carrito' %}" class="btn btn-light rounded-0 btn-block">Ir a inicio</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'carrito/tienda.html' %}
+
+{% block title %}Registro{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class="shadow-none mt-5 pt-5 pb-5 mb-5 bg-light rounded-0 pl-5"><h1 class="display-4">Consultas para Maddie</h1></div>
+	<div class="container-xl mb-5">
+    <form method="POST" action="" class="mt-2" autocomplete="off">
+        {% csrf_token %}
+    {{ form|crispy }}
+        <br>
+    <button type="submit" class="btn btn-dark rounded-0 border-info ">Enviar consulta</button>
+    </form>
+	</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'emails/only_confirm.html' %}
+{% load cart_tags %}
+{% load static %}
+{% block title %}Confirmación{% endblock %}
+
+{% block content %}
+	<div class="card border-0 rounded-0 d-block mt-xl-5">
+		<img src="{% static 'banner/bannerGenerico2.png' %}" class="card-img" alt="...">
+		<div class="card-img-overlay">
+			<h5 class="display-4" style="color: white;">Confirmación de cuenta</h5>
+		</div>
+	</div>
+
+	<nav class="padding_0" aria-label="breadcrumb">
+		<ol class="breadcrumb" style="margin-bottom: 0px">
+			<li class="breadcrumb-item"><a href="{% url 'listado_productos' %}">Shop</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Confirmación de cuenta</li>
+		</ol>
+	</nav>
+
+
+	{% include 'mensajes/messages.html' %}
+
+	<div class="container-xl margin-bottom_30 margin-top_30">
+		{% if success %}
+			<div class="alert alert-light text_align_center" role="alert" style="padding-top: 5%; padding-bottom: 5%">
+				<h1 class="alert-heading display-4" style="color: #138496; font-family: Raleway, sans-serif">Cuenta confirmada ❤</h1>
+				<p style="font-family: Raleway, sans-serif">Excelente, {{ user.username }}, tu cuenta ha sido confirmada! Solo resta iniciar sesión :) </p>
+				<p class="mb-0">Haz clic en el siguiente botón ;)</p>
+				<hr>
+				<p class="mb-0"><a href="{% url 'acceder' %}">
+					<button class="btn btn-outline-info btn-block rounded-0">Iniciar sesión</button>
+				</a></p>
+			</div>
+		{% else %}
+			<div class="alert alert-light text_align_center" role="alert" style="padding-top: 5%; padding-bottom: 5%">
+				<h1 class="alert-heading display-4" style="color: #138496; font-family: Raleway, sans-serif">Error de activación {{ user.username }} :(</h1>
+				<p style="font-family: Raleway, sans-serif">Hubo un error en la confirmación, el token es inválido o ha expirado el tiempo, tu cuenta aún no ha sido confirmada!</p>
+				<p class="mb-0"><br>Haz clic en el siguiente botón, para poder generar un nuevo token y te sea enviado nuevamente a tu mail... ánimo ya falta poco! :)</p>
+				<hr>
+				<p class="mb-0"><a href="{% url 'generar_nuevo_token' %}">
+					<button class="btn btn-outline-info btn-block rounded-0">Generar nuevo token de activación</button>
+				</a></p>
+			</div>
+		{% endif %}
+	</div>
+
+{% endblock %}

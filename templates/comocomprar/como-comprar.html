@@ -1,0 +1,86 @@
+{% extends 'carrito/tienda.html' %}
+
+{% block title %}Registro{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class="shadow-none mt-5 pt-5 pb-5 mb-5 bg-light rounded-0 pl-5"><h1 class="display-4">¿Cómo comprar en Maddie?</h1></div>
+	<div class="container-xl mb-5">
+		<div class="row">
+			<div class="col-12">
+				<h1 class="mb-0 font-weight-bold">Registrarte en Maddie</h1>
+
+			</div>
+			<div class="col-12">
+				<h2>Paso 1  ❤</h2>
+				<p class="mb-0"> ✔ Si es tu primera compra, tienes que crear tu cuenta, haciendo clic en <a href="{%  url 'registro' %}" class="text-info">Registro</a></p>
+				<p class="mb-0">  ✔
+					Luego de ingresar tus datos, se te enviará un link token de activación de cuenta al mail que registraste,
+					debes buscar el correo y hacer clic en el link. ¡Y listo, cuenta activada!</p>
+				<p class="mb-0">✔ Por último, debes completar tus datos personales, por única vez, para poder realizar el primer pedido,
+					desde la sección <a href="{% url 'mi_cuenta' %}" class="text-info">Mi Cuenta</a> >> Completar perfil.</p>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="col-12">
+				<h1 class="mb-0 font-weight-bold">Comprar en Maddie</h1>
+			</div>
+			<div class="col-12">
+				<p class="mb-0">Si ya tienes tu cuenta creada, activada y completa con tus datos personales
+					(sino la tienes creada, seguir los pasos de registro), entonces, es hora de realizar tu primera compra.</p>
+				<hr>
+			</div>
+			<div class="col-6">
+				<h2 class="mb-0 pb-0 mt-3">Paso 2  ❤</h2>
+				<p class="mb-0">✔Inicia sesión en tu cuenta, con tu usuario y contraseña.</p>
+			</div>
+			<div class="col-6">
+				<h2 class="mb-0 pb-0 mt-3">Paso 3  ❤</h2>
+				<p class="mb-0">✔Añadí los productos al carrito, seleccionando el botón >> Añadir al carrito</p>
+			</div>
+			<div class="col-6">
+				<h2 class="mb-0 pb-0 mt-3">Paso 4  ❤</h2>
+				<p class="mb-0">✔Luego dirígete a tu carrito de compras, selecciona el botón >> Ir a checkout, donde se te dirigirá al checkout para el pago.</p>
+			</div>
+			<div class="col-6">
+				<h2 class="mb-0 pb-0 mt-3">Paso 5  ❤</h2>
+				<p class="mb-0">✔Una vez en la sección de checkout, verifica que tu pedido sea el correcto, y si tienes algún cupón de descuento o giftcard puedes aplicarlo. Selecciona siguiente.</p>
+			</div>
+			<div class="col-6">
+				<h2 class="mb-0 pb-0 mt-3">Paso 6  ❤</h2>
+				<p class="mb-0">✔Luego, coloca tu código postal, selecciona el botón llamado aplicar.</p>
+			</div>
+			<div class="col-6">
+				<h2 class="mb-0 pb-0 mt-3">Paso 7  ❤</h2>
+				<p class="mb-0">Selecciona el transporte según la tarifa y una dirección para el envío o crea una nueva. Selecciona siguiente.✔</p>
+			</div>
+			<div class="col-6">
+				<h2 class="mb-0 pb-0 mt-3">Paso 8  ❤</h2>
+				<p class="mb-0">Se mostrara el resumen del pedido, ✔Verifica que todos los datos sean correctos.</p>
+			</div>
+			<div class="col-6">
+				<h2 class="mb-0 pb-0 mt-3">Paso 9  ❤</h2>
+				<p class="mb-0">✔Selecciona el medio de pago más conveniente, se mostrará la opción de Mercado Pago o Transferencia.</p>
+			</div>
+			<div class="col-6">
+				<h2 class="mb-0 pb-0 mt-3">Paso 10  ❤</h2>
+				<p class="mb-0">✔Selecciona el botón >> Crear pedido.</p>
+			</div>
+			<div class="col-6">
+				<h2 class="mb-0 pb-0 mt-3">Paso 11  ❤</h2>
+				<p class="mb-0">✔Luego, serás redirigido a la plataforma de pago para abonar con tarjeta tu pedido, en el caso de que hayas seleccionado Mercado Pago. Y en el caso de que hayas seleccionado transferencia,
+					tener en cuenta que la misma puede demorar en reflejarse hasta 48hs hábiles.</p>
+			</div>
+			<div class="col-6">
+				<h2 class="mb-0 pb-0 mt-3">Paso 12  ❤</h2>
+				<p class="mb-0">✔Una vez confirmada y abonada la compra, tu pedido será despechado dentro de las 72hs hábiles.</p>
+			</div>
+			<div class="col-6">
+				<h2 class="mb-0 pb-0 mt-3">Paso 13  ❤</h2>
+				<p class="mb-0">✔Y listo! Eso es todo… 😊</p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

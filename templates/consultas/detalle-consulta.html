@@ -1,0 +1,37 @@
+{% extends 'carrito/tienda.html' %}
+
+{% block title %}Registro{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class="shadow-none mt-5 pt-5 pb-5 mb-5 bg-light rounded-0 pl-5"><h1 class="display-4">Consulta N°{{ consulta.id }}</h1></div>
+	{% block alerta %}
+		{% include 'mensajes/messages.html' %}
+	{% endblock %}
+	<div class="container-xl mb-5">
+		<div class="row">
+			<div class="col-12"><h1>Motivo</h1></div>
+			<div class="col-12"><input class="form-control d-block" type="text" value="{{ consulta.motivo }}" disabled></div>
+			<div class="col-12 mt-3"><h1>Mensaje</h1></div>
+			<div class="col-12"><textarea class="form-control d-block" rows="5" type="textarea" disabled>{{ consulta.mensaje }}</textarea></div>
+			{% if confirma == True %}
+			<div class="col-12 mt-3"><hr><h1 class="text-info">Respuesta | {{ respuesta.fecha }}</h1></div>
+				<div class="col-12"><textarea class="form-control d-block alert-info text-info" rows="5" type="text" disabled>{{ respuesta.mensaje }}</textarea></div>
+			{% else %}
+				<div class="col-12">
+					<div class="alert-info alert text-info text_align_center mt-3">Aun no ha sido respondida ésta consulta</div>
+				</div>
+			{% endif %}
+		</div>
+		{% if ban == True %}
+		<form method="POST" action="" class="mt-2" autocomplete="off">
+			{% csrf_token %}
+			{{ form|crispy }}
+			<br>
+			<button type="submit" class="btn btn-dark rounded-0 border-info ">Marcar como visto</button>
+		</form>
+		{% endif %}
+	</div>
+{% endblock %}

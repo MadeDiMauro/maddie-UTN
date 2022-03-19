@@ -1,0 +1,42 @@
+{% extends 'carrito/tienda.html' %}
+{% block title %}Datos de transferencia{% endblock %}
+{% load cart_tags %}
+{% load static %}
+{% block content %}
+<div class="card border-0 rounded-0 d-block mt-xl-5">
+		<img src="{% static 'banner/bannerGenerico2.png' %}" class="card-img" alt="...">
+		<div class="card-img-overlay">
+			<h5 class="display-4" style="color: white;">Datos de transferencia</h5>
+		</div>
+	</div>
+
+	<nav class="padding_0" aria-label="breadcrumb">
+		<ol class="breadcrumb" >
+			<li class="breadcrumb-item"><a href="{% url 'listado_productos' %}">Shop</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Datos de transferencia</li>
+		</ol>
+	</nav>
+
+
+	{% include 'mensajes/messages.html' %}
+
+	<div class="container-xl margin-bottom_30 margin-top_30">
+			<div class="alert alert-light text_align_center" role="alert">
+				<h1 class="alert-heading display-4" style="color: #138496; font-family: Raleway, sans-serif">Datos de transferencia  ❤</h1>
+				<p class="text-justify" style="font-family: Raleway, sans-serif">{{ user.username|titulo }}, estos son los datos de la cuenta para el pago de tu pedido N° {{ pedido.id }}, el estado de tu pedido está pendiente de pago.
+				Recordá que el pago por transferencia tiene un mínimo de 48hs hábiles en acreditarse. Hasta no acreditarse el mismo, no podrá ser despachado tu pedido.
+					Una vez que realices la transferencia, enviar el comprobante al siguiente mail <b><a href="mailto:maddiemakeuprg@gmail.com?Subject=Enviar%20comprobante%20de%20pago%20Pedido%20Nro%20{{ pedido.id }}">maddiemakeuprg@gmail.com</a></b>, para que podamos actualizar el estado de tu pedido.</p>
+				<h1 class="mb-0">Cuenta</h1><br>
+				<p class="mb-0">NOMBRE Y APELLIDO: Di Mauro, Madeleine</p>
+				<p class="mb-0">CUIT: 23-38611941-4</p>
+				<p class="mb-0">BANCO: Brubank</p>
+				<p class="mb-0">ALIAS: MADELEINEDIMAURO</p>
+				<p class="mb-0">CBU: 1430001713001162110019</p>
+				<p class="mb-0">NRO DE CUENTA BRUBANK: 1300116211001</p>
+				<hr>
+				<p class="mb-0"><a href="{% url 'listado_productos' %}">
+					<button class="btn btn-outline-info btn-block rounded-0">Ir al shopping</button>
+				</a></p>
+			</div>
+	</div>
+{% endblock %}

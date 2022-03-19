@@ -1,0 +1,26 @@
+{% extends 'carrito/tienda.html' %}
+
+{% block title %}Token de activación{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class="shadow-none p-3 mb-5 bg-light rounded"><h1 class="display-4" style="margin-left: 80px; margin-top: 100px;">Nuevo token de activación</h1></div>
+	{% block alerta %}
+		{% include 'mensajes/messages.html' %}
+	{% endblock %}
+	<div class="container-xl padding_left_right margin-bottom_20 margin-top_30">
+	<div class="alert alert-light text_align_center" role="alert">
+				<h1 class="alert-heading display-4" style="color: #138496; font-family: Raleway, sans-serif">Generar nuevo token :)</h1>
+				<p style="font-family: Raleway, sans-serif">Completar con los datos que proporcionaste al momento de tu registro, debes colocar usuario, email y contraseña.</p>
+				<p class="mb-0">Luego de finalizar, haz clic en el botón 'Enviar token de activación a mi email' y luego checa tu correo... ánimo que ya falta poco! :)</p>
+	</div>
+	<form method="POST" action="" class="mt-2 form-group" autocomplete="off">
+        {% csrf_token %}
+    {{ form|crispy }}
+        <br>
+		<button type="submit" class="btn btn-outline-info rounded-0 border-info">Enviar token de activación a mi email</button>
+	</form>
+	</div>
+{% endblock %}

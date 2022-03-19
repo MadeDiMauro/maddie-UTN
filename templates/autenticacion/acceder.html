@@ -1,0 +1,24 @@
+{% extends 'carrito/tienda.html' %}
+
+{% block title %}Acceder{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class="shadow-none mt-5 pt-5 pb-5 mb-5 bg-light rounded-0 pl-5">
+		<h1 class="display-4" >Inicio de sesión</h1>
+	</div>
+	{% block alerta %}
+		{% include 'mensajes/messages.html' %}
+	{% endblock %}
+	<div class="container-xl mb-5">
+	<form method="POST" action="" class="mt-2" autocomplete="off">
+        {% csrf_token %}
+    {{ form|crispy }}
+        <br>
+		<button type="submit" class="btn btn-outline-info rounded-0 border-info">Iniciar sesión</button>  <a href="{% url 'registro' %}"><button type="button" class="btn btn-outline-dark rounded-0 border-info">Crear cuenta</button></a>
+		<a href="{% url 'password_reset' %}" class="btn btn-outline-dark rounded-0 border-info">Olvidé mi contraseña :(</a>
+    </form>
+	</div>
+{% endblock %}

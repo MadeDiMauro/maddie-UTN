@@ -1,0 +1,51 @@
+{% extends 'carrito/tienda.html' %}
+
+{% block title %}Preguntas frecuentes{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+	{% block alerta %}
+		{% include 'mensajes/messages.html' %}
+	{% endblock %}
+	<div class="shadow-none mt-5 pt-5 pb-5 mb-5 bg-light rounded-0 pl-5"><h1 class="display-4">Noticias y próximos pedidos</h1></div>
+	<div class="container-xl mb-5">
+		<div class="row">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<form class="form-group" method="get">
+					<div class="row">
+						{% if user.is_authenticated %}
+							<div class="col-7"><input class="form-control rounded-0 border-info " type="search" placeholder="Ingrese una palabra o descripción" aria-label="Search" name="buscar" value="{{ request.GET.buscar }}"></div>
+							<div class="col-2 border-light border-right"><button class="btn btn-outline-info btn-block rounded-0 border-info" type="submit">Buscar</button></div>
+							<div class="col-3 border-light border-left"><a class="btn-block btn button btn-outline-dark rounded-0" href="{% url 'consulta-usuario' %}">Enviar un mensaje</a></div>
+						{% else %}
+							<div class="col-10"><input class="form-control rounded-0 border-info " type="search" placeholder="Ingrese una palabra o descripción" aria-label="Search" name="buscar" value="{{ request.GET.buscar }}"></div>
+							<div class="col-2"><button class="btn btn-outline-info btn-block rounded-0 border-info" type="submit">Buscar</button></div>
+						{% endif %}
+					</div>
+				</form>
+			</div>
+		</div>
+	{% for pedido in ppedidos %}
+		<div class="row margin-bottom_30 margin-top_20 border-bottom border-info pb-3 pt-3">
+			<div class="col-12">
+				<h2 class="font-weight-bold" style="color: #e83e8c">❤ {{ pedido.titulo }}</h2>
+				<p class="mb-0 text-justify"> ✔ {{ pedido.listado }}</p>
+				<p class="mb-0 text-justify"> ✔ {{ pedido.detalles }}</p>
+				<hr>
+				<p class="mb-0 text-info">Fecha estimada de llegada: {{ pedido.fecha_d }} al {{ pedido.fecha_h }} - Fotos: <a class="rounded-0 padding_0 border-0 btn btn-outline-info" target="_blank" href="{{ pedido.link_publicacion }}">Link de fotos en instagram</a>
+				{% if user.is_authenticated %}
+					<a class="mt-2 btn btn-block text-info button btn-light rounded-0" target="_blank" href="{% url 'consulta-proximos-pedidos' pedido.id %}">Enviar un mensaje</a>
+				{% endif %}
+				</p>
+			</div>
+		</div>
+	{% empty %}
+		<div class="row margin-top_20 margin-bottom_10">
+			<div class="col">
+				<div class="alert-info alert text-info text_align_center">No hay próximos pedidos disponibles</div>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+{% endblock %}

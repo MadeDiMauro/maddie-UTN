@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}{% endblock %} - Maddie MakeUp</title>
+
+	{% load static %}
+	{% get_media_prefix as MEDIA %}
+
+	<link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"/>
+	<link rel="stylesheet" href="{% static 'css/carousel.css' %}"/>
+	<!-- Site CSS -->
+	<link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+	<!-- Responsive CSS -->
+	<link rel="stylesheet" href="{% static 'css/responsive.css' %}"/>
+	<!-- Custom CSS -->
+	<link rel="stylesheet" href="{% static 'css/custom.css' %}"/>
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@200&family=Raleway&display=swap" rel="stylesheet">
+	<link href = "https://fonts.googleapis.com/css2? family = Miniver & display = swap" rel = "hoja de estilo ">
+
+	<style>
+		 h1,h2,h3,h4,h5,h6,p, div, button, a, form, select, nav{
+			 font-family: 'Raleway', sans-serif;
+		 }
+		.btn-pink{color: deeppink;border-color: deeppink}
+		.btn-pink.focus,
+		.btn-pink.hover,
+		.btn-pink:hover {box-shadow: none; background-color: #ffaeda; text-emphasis-color: white}
+		.btn-pink:focus {box-shadow: none; background-color: deeppink}
+	</style>
+
+</head>
+
+<body style="background-image: url('{% static 'banner/geometric-leaves.png' %}')">
+<header>
+	<div class="container-xl mt-5 mb-5">
+		<div class="row">
+			<div class="col-12 text_align_center">
+				<img class="img-responsive" src="{% static 'banner/logo.png' %}">
+			</div>
+		</div>
+	</div>
+</header>
+
+{% block content %}
+	<!-- ALERTA DE MENSAJES-->
+	{% block alerta %}
+		{% include 'mensajes/messages.html' %}
+	{% endblock %}
+	<!--FIN ALERTA -->
+{% endblock %}
+
+{% block javascript %}
+	<script src="{% static 'js/jquery-3.5.1.js' %}"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+{% endblock %}
+
+<!-- Footer -->
+<footer>
+</footer>
+<!-- End Footer -->
+</body>
+
+</html>

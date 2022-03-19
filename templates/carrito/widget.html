@@ -1,0 +1,51 @@
+{% load cart_tags %}
+{% load static %}
+{% load thumbnail %}
+
+
+<div class="container-fluid">
+	{% if request.session.cart.items %}
+		<div class="row border-bottom text_align_center" style="">
+			<div class="d-none d-sm-none d-md-none d-lg-block col-lg-2"><h4 class="text-dark">Producto</h4></div>
+			<div class="d-none d-sm-none d-md-none d-lg-block col-lg-2"><h4 class="text-dark">Descripción</h4></div>
+			<div class="d-none d-sm-none d-md-none d-lg-block col-lg-2"><h4 class="text-dark">Cantidad</h4></div>
+			<div class="d-none d-sm-none d-md-none d-lg-block col-lg-2"><h4 class="text-dark">Acciones</h4></div>
+			<div class="d-none d-sm-none d-md-none d-lg-block col-lg-2"><h4 class="text-dark">Quitar</h4></div>
+			<div class="d-none d-sm-none d-md-none d-lg-block col-lg-2"><h4 class="text-dark font-weight-bold">Subtotal</h4></div>
+		</div>
+		{% for key, value in request.session.cart.items %}
+			{% if value.tipo == 'producto' %}
+				{% include 'carrito/productos.html' %}
+			{% endif %}
+
+			{% if value.tipo == 'combo' %}
+				{% include 'carrito/combos.html' %}
+			{% endif %}
+
+			{% if value.tipo == 'giftcard' %}
+				{% include 'carrito/giftcards.html' %}
+			{% endif %}
+		{% endfor %}
+		<div class="row bg-light pt-3" >
+			<div class="col-6 text_align_left pt-3 pt-md-0" ><h1
+					class="text-dark font-weight-bold d-none d-sm-none d-md-none d-lg-block">Total del carrito</h1>
+				<div class="d-block d-sm-block d-md-block d-lg-none"><h1 class="display-4 font-weight-bold">Total del carrito</h1></div>
+			</div>
+			<div class="col-6 font-weight-bold text_align_right pb-3 pb-md-0 ">
+				<h2 class="d-none d-sm-none d-md-none d-lg-block" style="color: #138496">{{ total_carrito|separador|money_format:"$" }}</h2>
+				<div class="d-block d-sm-block d-md-block d-lg-none"><h1 class="display-4 font-weight-bold" style="color: #138496">{{ total_carrito|separador|money_format:"$" }}</h1></div>
+			</div>
+		</div>
+	{% else %}
+		<div class="container-fluid margin-bottom_30 margin-top_30">
+			<div class="alert alert-light text_align_center" role="alert">
+				<h1 class="alert-heading display-4" style="color: #138496; font-family: Raleway, sans-serif"> {{ user.username|titulo }} ❤</h1>
+					<p style="font-family: Raleway, sans-serif">No tienes productos en el carrito. Debes llenar tu carrito primero, y luego podrás realizar el pedido correspondiente.</p>
+				<hr>
+				<p class="mb-0"><a href="{% url 'listado_productos' %}">
+					<button class="btn btn-outline-info btn-block rounded-0">Añadir productos a mi carrito</button>
+				</a></p>
+			</div>
+		</div>
+	{% endif %}
+</div>

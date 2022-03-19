@@ -1,0 +1,47 @@
+{% extends 'carrito/tienda.html' %}
+{% load cart_tags %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Tienda{% endblock %}
+
+{% block content %}
+	<div class="card border-0 rounded-0 d-block mt-xl-5">
+		<img src="{% static 'banner/bannerGenerico2.png' %}" class="card-img img-responsive">
+		<div class="card-img-overlay col-12">
+			<h5 class="display-3" style="color: white; font-family: Raleway, sans-serif;">Test de producto</h5>
+		</div>
+	</div>
+	<nav class="padding_0" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'listado_productos' %}">Shop</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Shop</li>
+        </ol>
+	</nav>
+
+	{% include 'mensajes/messages.html' %}
+
+	<div class="container-xl mt-3 mb-3">
+		<div class="row">
+			<div class="col-12 col-xl-6 text_align_center">
+				<form class="form-group text-info" method="post" class="mt-2" autocomplete="off" >
+                    {% csrf_token %}
+                    {{ form }}
+                    <br>
+					<button type="submit" class="btn btn-outline-info rounded-0 border-info">Mostrar producto  ❤</button>
+				</form>
+			</div>
+			<div class="col-12 col-xl-6">
+				<div class="row margin-top_20 text_align_center">
+					<div class="col-12">
+						<img class="shadow shadow-sm img-responsive" src="{% static 'banner/test-producto-img-1.jpg' %}" width="80%">
+					</div>
+					<div class="col-12 margin-top_20">
+						<img class="shadow shadow-sm img-responsive" src="{% static 'banner/test-producto-img-2.jpg' %}" width="80%">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

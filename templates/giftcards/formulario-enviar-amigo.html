@@ -1,0 +1,59 @@
+{% extends 'carrito/tienda.html' %}
+{% load cart_tags %}
+{% load static %}
+{% block title %}Asociar giftcards{% endblock %}
+
+{% block content %}
+	<div class="card border-0 rounded-0 d-block mt-xl-5">
+		<img src="{% static 'banner/bannerGenerico2.png' %}" class="card-img" alt="...">
+		<div class="card-img-overlay">
+			<h5 class="display-4" style="color: white;">Asociar giftcards</h5>
+		</div>
+	</div>
+
+	<nav class="padding_0" aria-label="breadcrumb">
+		<ol class="breadcrumb" style="margin-bottom: 0px">
+			<li class="breadcrumb-item"><a href="{% url 'listado_productos' %}">Shop</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Asociar giftcards</li>
+		</ol>
+	</nav>
+
+
+	{% include 'mensajes/messages.html' %}
+
+	<div class="container-xl margin-bottom_30 margin-top_30">
+			<div class="alert alert-light text_align_center" role="alert" style="padding-top: 5%; padding-bottom: 5%">
+				<h1 class="alert-heading display-4" style="color: #138496; font-family: Raleway, sans-serif">Asociar giftcards a tus amigos ❤</h1>
+				<p style="font-family: Raleway, sans-serif">{{ detalle_giftcard.usuario.usuario.username|titulo }}, tienes giftcards sin asociar, selecciona la opción 'Enviar a un amigo' y completa el formulario de envio. </p>
+				<p class="mb-0 text-info">Tienes {{ cantidad_giftcards }} sin asociar</p>
+				<hr>
+				<div class="row">
+					<div class="col-3"><p class="text-info font-weight-bold">Nombre del giftcard</p></div>
+					<div class="col-3"><p class="text-info font-weight-bold">Valor del giftcard</p></div>
+					<div class="col-3"><p class="text-info font-weight-bold">Número de tarjeta</p></div>
+					<div class="col-3"><p class="text-info font-weight-bold">Acciones</p></div>
+				</div>
+				{% for detalle in detalle_giftcard %}
+				<div class="row pt-1 pb-1">
+					<div class="col-3"><p class="mb-0">{{ detalle.giftcard.nombre }}</p></div>
+					<div class="col-3"><p class="mb-0">{{ detalle.giftcard.preciofinal|convertirf|separador|money_format:'$' }}</p></div>
+					<div class="col-3"><p class="mb-0">{{ detalle.nro_tarjeta }}</p></div>
+					<div class="col-3"><a href="{% url 'enviar_amigo_giftcard' detalle.id %}" class="btn btn-block rounded-0 btn-outline-info">Enviar a un amigo</a></div>
+				</div>
+				{% empty %}
+					<div class="row">
+						<div class="col-12">
+							<div class="alert alert-info">No existen giftcards para asociar</div>
+						</div>
+					</div>
+				{% endfor %}
+				<hr>
+				<div class="row">
+					<div class="col-12">
+						<a class="btn btn-outline-info rounded-0 btn-block" href="{% url 'listado_productos' %}">Ir al shopping :)</a>
+					</div>
+				</div>
+			</div>
+	</div>
+
+{% endblock %}

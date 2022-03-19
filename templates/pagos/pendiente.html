@@ -1,0 +1,34 @@
+{% extends 'carrito/tienda.html' %}
+{% block title %}Pago pendiente{% endblock %}
+{% load cart_tags %}
+{% load static %}
+{% block content %}
+<div class="card border-0 rounded-0 d-block mt-xl-5">
+		<img src="{% static 'banner/bannerGenerico2.png' %}" class="card-img" alt="...">
+		<div class="card-img-overlay">
+			<h5 class="display-4" style="color: white;">Pago pendiente</h5>
+		</div>
+	</div>
+
+	<nav class="padding_0" aria-label="breadcrumb">
+		<ol class="breadcrumb" >
+			<li class="breadcrumb-item"><a href="{% url 'listado_productos' %}">Shop</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Pago pendiente</li>
+		</ol>
+	</nav>
+
+
+	{% include 'mensajes/messages.html' %}
+
+	<div class="container-xl margin-bottom_30 margin-top_30">
+			<div class="alert alert-light text_align_center" role="alert" style="padding-top: 5%; padding-bottom: 5%">
+				<h1 class="alert-heading display-4" style="color: #138496; font-family: Raleway, sans-serif">Pago pendiente</h1>
+				<p style="font-family: Raleway, sans-serif">Tu pago está en proceso {{ user.username }}, el pago de tu pedido N° {{ pedido.id }} está en estado pendiente!</p>
+				<p class="mb-0">¿Qué podes hacer? No te preocupes, en unas horas Mercado Pago te avisará por e-mail si se acreditó.</p>
+				<hr>
+				<p class="mb-0"><a href="{% url 'listado_productos' %}">
+					<button class="btn btn-outline-info btn-block rounded-0">Ir al shopping</button>
+				</a></p>
+			</div>
+	</div>
+{% endblock %}

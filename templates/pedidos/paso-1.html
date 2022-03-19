@@ -1,0 +1,108 @@
+{% extends 'pedidos/checkout_base.html' %}
+{% load cart_tags %}
+{% load static %}
+{% block title %}Verificar pedido{% endblock %}
+
+{% block content %}
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+	<!-- Custom styles for this template -->
+	<link href="{% static 'css/form-validation.css' %}" rel="stylesheet">
+
+
+	{% for datos in perfiles %}
+		{% if cantidad >= 1 %}
+				<div class="container-xl p-5 alert rounded-0 border-0 alert-info bg-white shadow">
+					<div class="container-xl">
+						<div class="row">
+						</div>
+						<div class="row mb-3 text_align_center">
+							<div class="col-12 col-xl-4 bg-info pt-2 shadow"><h1 class="text-white font-weight-bold">Verificar carrito</h1></div>
+							<div class="col-12 col-xl-4 bg-white pt-2"><h1 class="text-info">Envío y transporte</h1></div>
+							<div class="col-12 col-xl-4 bg-white pt-2"><h1 class="text-info">Resumen y pago</h1></div>
+						</div>
+						<div class="d-none d-xl-block">
+							<div class="row mt-0 pt-2 text_align_center">
+								<div class="col-4 bg-info pt-2 pb-1 shadow"><p class="text-white">Usted está aquí</p></div>
+								<div class="col-4 bg-white pt-2 pb-1"><p class="text-dark">Paso siguiente</p></div>
+								<div class="col-4 bg-white pt-2 pb-1"><p class="text-dark">Último paso</p></div>
+							</div>
+						</div>
+						<div class="row text_align_center border-top border-info">
+							<div class="col-12">
+								<p>Revisá tu carrito y si tenes un código de descuento o una giftcard lo podes aplicar en este momento.</p>
+							</div>
+						</div>
+						<div class="row text_align_center">
+							<div class="col-12">
+								<p>Una vez termines, haz clic en el botón <b>"Siguiente"</b>, donde serás redirigido al siguiente paso. <br>Es importante que sepas que una vez procesado el pedido, no se puede retroceder.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<div class="container-xl padding_left_right">
+				{% include 'mensajes/messages.html' %}
+			</div>
+			<div class="container-xl bg-white p-5 margin-bottom_20 margin-top_10 rounded-0 shadow">
+						<div class="row">
+								<div class="col-12">
+									{% include 'pedidos/carrito/widget.html' %}
+								</div>
+						</div>
+						<div class="row mt-3">
+							<div class="col-12 col-lg-6">
+								<a href="{% url 'cancelar_checkout' %}" class="btn btn-light rounded-0 btn-block">Cancelar</a>
+							</div>
+							<div class="col-12 col-lg-6">
+								<a href="{% url 'checkout-paso-dos' %}" class="btn btn-info rounded-0 btn-block">Siguiente</a>
+							</div>
+						</div>
+			</div>
+
+		{% else %}
+			<div class="container-fluid margin-bottom_30 margin-top_30">
+			<div class="alert alert-light text_align_center" role="alert">
+				<h1 class="alert-heading display-4" style="color: #138496; font-family: Raleway, sans-serif"> {{ user.username|titulo }} ❤</h1>
+					<p style="font-family: Raleway, sans-serif">No tienes productos en el carrito. Debes llenar tu carrito primero, y luego podrás realizar el pedido correspondiente.</p>
+				<hr>
+				<p class="mb-0"><a href="{% url 'listado_productos' %}">
+					<button class="btn btn-outline-info btn-block rounded-0">Añadir productos a mi carrito</button>
+				</a></p>
+				</div>
+			</div>
+		{% endif %}
+
+	{% empty %}
+
+		<div class="container-fluid margin-bottom_30 margin-top_30">
+			<div class="alert alert-light text_align_center" role="alert" style="padding-top: 5%; padding-bottom: 5%">
+				<h1 class="alert-heading display-4" style="color: #138496; font-family: Raleway, sans-serif">Información importante ❤</h1>
+				<p style="font-family: Raleway, sans-serif">Para poder comprar por primera vez, te vamos a molestar un ratito y pedirte que completes un formulario con tus datos personales.
+					Pedimos esta información para poder generar la orden de compra correspondiente :) Muchas gracias!</p>
+				<p class="mb-0">Haz clic en el siguiente botón ;)</p>
+				<hr>
+				<p class="mb-0"><a href="{% url 'completar_cuenta' %}">
+					<button class="btn btn-outline-info btn-block rounded-0">Formulario a completar</button>
+				</a></p>
+			</div>
+		</div>
+
+	{% endfor %}
+{% endblock %}

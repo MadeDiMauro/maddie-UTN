@@ -1,0 +1,34 @@
+{% extends 'carrito/tienda.html' %}
+{% block title %}Pago recibido{% endblock %}
+{% load static %}
+{% load cart_tags %}
+{% block content %}
+<div class="card border-0 rounded-0 d-block mt-xl-5">
+		<img src="{% static 'banner/bannerGenerico2.png' %}" class="card-img" alt="...">
+		<div class="card-img-overlay">
+			<h5 class="display-4" style="color: white;">Confirmación de pago</h5>
+		</div>
+	</div>
+
+	<nav class="padding_0" aria-label="breadcrumb">
+		<ol class="breadcrumb" >
+			<li class="breadcrumb-item"><a href="{% url 'listado_productos' %}">Shop</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Confirmación de pago</li>
+		</ol>
+	</nav>
+
+
+	{% include 'mensajes/messages.html' %}
+
+	<div class="container-xl margin-bottom_30 margin-top_30">
+			<div class="alert alert-light text_align_center" role="alert" style="padding-top: 5%; padding-bottom: 5%">
+				<h1 class="alert-heading display-4" style="color: #138496; font-family: Raleway, sans-serif">Pago recibido ❤</h1>
+				<p style="font-family: Raleway, sans-serif">Excelente, {{ user.username }}, el pago de tu pedido N° {{ pedido.id }} ha sido recibido! :) </p>
+				<p class="mb-0">Muchas gracias por tu compra ;)</p>
+				<hr>
+				<p class="mb-0"><a href="{% url 'listado_productos' %}">
+					<button class="btn btn-outline-info btn-block rounded-0">Ir al shopping</button>
+				</a></p>
+			</div>
+	</div>
+{% endblock %}

@@ -1,0 +1,218 @@
+{% extends 'pedidos/checkout_base.html' %}
+{% load cart_tags %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Envío y dirección{% endblock %}
+
+{% block content %}
+
+	<style>
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+				font-size: 3.5rem;
+			}
+		}
+	</style>
+	<!-- Custom styles for this template -->
+	<link href="{% static 'css/form-validation.css' %}" rel="stylesheet">
+
+
+	{% for datos in perfiles %}
+		{% if cantidad >= 1 %}
+				<div class="container-xl p-5 alert rounded-0 border-0 alert-info bg-white shadow">
+					<div class="container-xl">
+						<div class="row">
+						</div>
+						<div class="row mb-3 text_align_center">
+							<div class="col-12 col-xl-4  bg-white pt-2"><h1 class="text-info">✓ Verificar carrito</h1></div>
+							<div class="col-12 col-xl-4  bg-white pt-2"><h1 class="text-info">✓ Envío y transporte</h1></div>
+							<div class="col-12 col-xl-4  bg-info pt-2 shadow"><h1 class="text-white font-weight-bold">Resumen y pago</h1></div>
+						</div>
+						<div class="d-none d-xl-block">
+							<div class="row mt-0 pt-2 text_align_center">
+								<div class="col-4 bg-white pt-2 pb-1"><p class="text-dark">✓ Paso anterior</p></div>
+								<div class="col-4 bg-white pt-2 pb-1"><p class="text-dark">✓ Paso anterior</p></div>
+								<div class="col-4 bg-info pt-2 pb-1 shadow"><p class="text-white">Usted está aquí</p></div>
+							</div>
+						</div>
+						<div class="row text_align_center border-top border-info">
+							<div class="col-12">
+								<p>En esta sección se detalla el resumen del checkout, <br>verificar que esté todo correcto, luego seleccióna el medio de pago más conveniente.</p>
+							</div>
+						</div>
+						<div class="row text_align_center">
+							<div class="col-12">
+								<p>Una vez termines, haz clic en el botón <b>"Crear pedido"</b>, donde serás redirigido a la plataforma de pago. Es importante que sepas que una vez procesado el pedido, no se puede retroceder.
+									En todo caso si deseas cancelar el pedido recientemente creado, debes ir a la sección de 'Mi Cuenta' >> 'Mis pedidos', y buscar por N° de pedido, y seleccionar 'Cancelar pedido'.
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			<div class="container-xl padding_left_right">
+				{% include 'mensajes/messages.html' %}
+			</div>
+			<div class="container-xl bg-white p-5 margin-bottom_20 margin-top_10 rounded-0 shadow">
+					<form id="form" action="{% url 'procesar_pedido' %}" class="form-group margin-top_20 margin-bottom_20" method="post">
+						{% csrf_token %}
+
+						<div class="row text_align_center">
+							{% if perfil_usuario != None %}
+							<div class="col-12">
+								<h1 class="font-weight-bold text-info">Resumen del pedido</h1>
+							</div>
+							<div class="col-12 mt-3">
+								<p class="text-info font-weight-bold">Datos del usuario</p><hr>
+							</div>
+							<div class="col-12">
+								<p>{{ perfil_usuario.usuario.first_name }}, {{ perfil_usuario.usuario.last_name }}. DNI {{ perfil_usuario.dni }}. Email: {{ perfil_usuario.usuario.email }}</p><hr>
+							</div>
+							<div class="col-12">
+								<p class="text-info font-weight-bold">Dirección del envío</p><hr>
+							</div>
+							<div class="col-12">
+								<p>{{ direccion_envio.direccion }} {{ direccion_envio.numero }}. {{ direccion_envio.piso_departamento }}, {{ direccion_envio.ciudad }}, {{ direccion_envio.provincia }}. Celular de contacto: {{ direccion_envio.telefono }}</p><hr>
+							</div>
+							{% endif %}
+						</div>
+						<div class="row text_align_center">
+							<div class="col-12 mt-5">
+								<p class="text-info font-weight-bold">Carrito de compras</p><hr>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-6">
+								<p class="text-info font-weight-bold">Detalles</p><hr>
+								<div class="col-12 m-0">
+
+								</div>
+								{% if request.session.cart.items %}
+									{% for key, value in request.session.cart.items %}
+										{% if value.tipo == 'producto' %}
+											<p class="pb-0">{{ value.nombre }} x {{ value.cantidad }}. Subtotal: {{ value.precio|multiply:value.cantidad|separador|money_format:"$" }}</p><br>
+										{% endif %}
+										{% if value.tipo == 'combo' %}
+											<p class="pb-0">{{ value.nombre }} x {{ value.cantidad }}. Subtotal: {{ value.precio|multiply:value.cantidad|separador|money_format:"$" }}</p><br>
+										{% endif %}
+										{% if value.tipo == 'giftcard' %}
+											<p class="pb-0">{{ value.nombre }} x {{ value.cantidad }}. Subtotal: {{ value.precio|multiply:value.cantidad|separador|money_format:"$" }}</p><br>
+										{% endif %}
+									{% endfor %}
+								{% endif %}
+							</div>
+							<div class="col-6">
+								{% if codigo_descuento != None %}
+									<div class="col-12 m-0">
+										<p class="text-info font-weight-bold">Código de descuento</p><hr>
+									</div>
+									<div class="col-12 m-0">
+										{{ codigo_descuento.valor }}% de descuento. Valor del descuento - ${{ total_carrito|mdescod:codigo_descuento.valor|separador }}
+									</div>
+									<hr>
+								{% endif %}
+								{% if detalle_giftcard != None %}
+									<div class="col-12 m-0">
+										<p class="text-info font-weight-bold">Giftcard</p><hr>
+									</div>
+									<div class="col-12 m-0">
+										Número del giftcard: {{ detalle_giftcard.nro_tarjeta }}, el descuento es de: - {{ detalle_giftcard.giftcard.preciofinal|separador|money_format:"$" }}
+									</div>
+									<hr>
+								{% endif %}
+								<div class="col-12 m-0">
+									<p class="text-info font-weight-bold">Envio</p><hr>
+								</div>
+								<div class="col-12 m-0">
+									Por {{ envio_transporte.nombre }}, el precio envio es de: {{ envio_transporte.precio_servicio|separador|money_format:'$' }}, plazo de entrega: {{ envio_transporte.plazo_entrega }}
+								</div>
+							</div>
+						</div>
+
+
+						<div class="row bg-light pt-3 mt-3 text_align_center">
+							<div class="col-6">
+								<h1 class="font-weight-bold text-info">Total del pedido</h1>
+							</div>
+							<div class="col-6">
+								<h1 class="font-weight-bold text-info">
+									{% if ban_cod == True and ban_gif == True %}
+										{{ total_carrito|descod:codigo_descuento.valor|desgif:detalle_giftcard.giftcard.preciofinal|sumaenvio:envio_transporte.precio_servicio|separador|money_format:"$" }}
+									{% endif %}
+									{% if ban_cod == True and ban_gif == False %}
+										{{ total_carrito|descod:codigo_descuento.valor|sumaenvio:envio_transporte.precio_servicio|separador|money_format:"$" }}
+									{% endif %}
+									{% if ban_cod == False and ban_gif == True %}
+										{{ total_carrito|desgif:detalle_giftcard.giftcard.preciofinal|sumaenvio:envio_transporte.precio_servicio|separador|money_format:"$" }}
+									{% endif %}
+									{% if ban_cod == False and ban_gif == False %}
+										{{ total_carrito|sumaenvio:envio_transporte.precio_servicio|separador|money_format:"$" }}
+									{% endif %}
+								</h1>
+							</div>
+						</div>
+
+
+						<div class="row text_align_center mt-3 bg-white p-3">
+							<div class="col-12">
+								<h1 class="font-weight-bold text-info">Medio de pago</h1>
+								<small>Selecciona el medío de pago, luego haz clic en la opción crear pedido. Vas a ser redirigido a la plataforma de pago.</small>
+							</div>
+							<div class="col-12 text_align_center">
+								{{ form }}
+							</div>
+						</div>
+
+
+						<div class="row mt-3">
+							<div class="col-4">
+								<a href="{% url 'cancelar_checkout' %}" class="btn btn-light rounded-0 btn-block">Cancelar</a>
+							</div>
+							<div class="col-4">
+								<a href="{% url 'checkout-paso-dos' %}" class="btn btn-light rounded-0 btn-block">Atrás</a>
+							</div>
+							<div class="col-4">
+								<button class="btn btn-info rounded-0 btn-block" type="submit">Crear pedido</button>
+							</div>
+						</div>
+					</form>
+			</div>
+		{% else %}
+			<div class="container-fluid margin-bottom_30 margin-top_30">
+			<div class="alert alert-light text_align_center" role="alert">
+				<h1 class="alert-heading display-4" style="color: #138496; font-family: Raleway, sans-serif"> {{ user.username|titulo }} ❤</h1>
+					<p style="font-family: Raleway, sans-serif">No tienes productos en el carrito. Debes llenar tu carrito primero, y luego podrás realizar el pedido correspondiente.</p>
+				<hr>
+				<p class="mb-0"><a href="{% url 'listado_productos' %}">
+					<button class="btn btn-outline-info btn-block rounded-0">Añadir productos a mi carrito</button>
+				</a></p>
+				</div>
+			</div>
+		{% endif %}
+
+	{% empty %}
+
+		<div class="container-fluid margin-bottom_30 margin-top_30">
+			<div class="alert alert-light text_align_center" role="alert" style="padding-top: 5%; padding-bottom: 5%">
+				<h1 class="alert-heading display-4" style="color: #138496; font-family: Raleway, sans-serif">Información importante ❤</h1>
+				<p style="font-family: Raleway, sans-serif">Para poder comprar por primera vez, te vamos a molestar un ratito y pedirte que completes un formulario con tus datos personales.
+					Pedimos esta información para poder generar la orden de compra correspondiente :) Muchas gracias!</p>
+				<p class="mb-0">Haz clic en el siguiente botón ;)</p>
+				<hr>
+				<p class="mb-0"><a href="{% url 'completar_cuenta' %}">
+					<button class="btn btn-outline-info btn-block rounded-0">Formulario a completar</button>
+				</a></p>
+			</div>
+		</div>
+
+	{% endfor %}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'carrito/tienda.html' %}
+
+{% block title %}Preguntas frecuentes{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class="shadow-none mt-5 pt-5 pb-5 mb-5 bg-light rounded-0 pl-5"><h1 class="display-4">Preguntas frecuentes</h1></div>
+	<div class="container-xl mb-5">
+		<div class="row">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<form class="form-group" method="get">
+					<div class="row">
+						<div class="col-10"><input class="form-control rounded-0 border-info " type="search" placeholder="Ingrese una palabra" aria-label="Search" name="buscar" value="{{ request.GET.buscar }}"></div>
+						<div class="col-2"><button class="btn btn-outline-info btn-block rounded-0 border-info" type="submit">Buscar</button></div>
+					</div>
+				</form>
+			</div>
+		</div>
+	{% for pregunta in preguntas %}
+		<div class="row margin-bottom_30 margin-top_20 border-bottom border-info pb-3 pt-3">
+			<div class="col-12">
+				<h2 class="font-weight-bold">❤ {{ pregunta.pregunta }}</h2>
+				<p class="mb-0 text-justify"> ✔ {{ pregunta.respuesta }}</p>
+				<hr>
+				<p class="mb-0 text-info">Categoria: {{ pregunta.categoria }}</p>
+			</div>
+		</div>
+	{% empty %}
+		<div class="row margin-top_20 margin-bottom_10">
+			<div class="col">
+				<div class="alert-info alert text-info text_align_center">No hay preguntas frecuentes disponibles</div>
+			</div>
+		</div>
+	{% endfor %}
+	</div>
+{% endblock %}

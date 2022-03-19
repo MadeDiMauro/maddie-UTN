@@ -1,0 +1,64 @@
+
+{% load cart_tags %}
+{% load static %}
+
+<div class="container-xl margin-top_20 margin-bottom_20">
+	<div class="row">
+		<div class="col-10"><h1 style="color: #138496">Información de mis pedidos ❤</h1></div>
+		<div class="col">
+			<a href="{% url 'listado_productos' %}">
+				<button class="btn btn-sm btn-outline-info btn-block rounded-0">Añadir productos</button>
+			</a>
+		</div>
+	</div>
+	{% if PEDIDOS != None %}
+		<div class="row text_align_center pt-2 pb-2 border-bottom border-light">
+				<div class="col-2 font-weight-bold">Código</div>
+				<div class="col-2 font-weight-bold">Total</div>
+				<div class="col-2 font-weight-bold">Fecha</div>
+				<div class="col-2 font-weight-bold">Estado</div>
+				<div class="col-2 font-weight-bold">Pago</div>
+				<div class="col-2 font-weight-bold">Acción</div>
+		</div>
+	{% endif %}
+		{% for pedido in PEDIDOS %}
+			{% if pedido.estado == 'pendiente' %}
+			<div class="row text_align_center border-light border-bottom  alert-secondary shadow-sm mb-1 pt-1 pb-1">
+				<div class="col-2">N° {{ pedido.id }}</div>
+				<div class="col-2">{{ pedido.montofinal|separador|money_format:'$' }}</div>
+				<div class="col-2">{{ pedido.creacion|date:'d/m/Y H:i' }}</div>
+				<div class="col-2">{{ pedido.estado|titulo }}</div>
+				<div class="col-2">{% if pedido.pago.confirmado == False %}Pendiente de pago{% else %}Pago recibido{% endif %}</div>
+				<div class="col-2"><a href="{% url 'ver_pedido_mi_cuenta' pedido.id %}" class="btn-block btn rounded-0 btn-sm btn-outline-secondary">Ver detalle</a></div>
+			</div>
+			{% endif %}
+			{% if pedido.estado == 'finalizado' %}
+			<div class="row text_align_center border-light border-bottom  alert-success shadow-sm mb-1 pt-1 pb-1">
+				<div class="col-2">N° {{ pedido.id }}</div>
+				<div class="col-2">{{ pedido.montofinal|separador|money_format:'$' }}</div>
+				<div class="col-2">{{ pedido.creacion|date:'d/m/Y H:i' }}</div>
+				<div class="col-2">{{ pedido.estado|titulo }}</div>
+				<div class="col-2">{% if pedido.pago.confirmado == False %}Pendiente de pago{% else %}Pago recibido{% endif %}</div>
+				<div class="col-2"><a href="{% url 'ver_pedido_mi_cuenta' pedido.id %}" class="btn-block btn rounded-0 btn-sm btn-outline-success">Ver detalle</a></div>
+			</div>
+			{% endif %}
+			{% if pedido.estado == 'cancelado' %}
+			<div class="row text_align_center border-light border-bottom  alert-danger shadow-sm mb-1 pt-1 pb-1">
+				<div class="col-2">N° {{ pedido.id }}</div>
+				<div class="col-2">{{ pedido.montofinal|separador|money_format:'$' }}</div>
+				<div class="col-2">{{ pedido.creacion|date:'d/m/Y H:i' }}</div>
+				<div class="col-2">{{ pedido.estado|titulo }}</div>
+				<div class="col-2">{% if pedido.pago.confirmado == False %}Pendiente de pago{% else %}Pago recibido{% endif %}</div>
+				<div class="col-2"><a href="{% url 'ver_pedido_mi_cuenta' pedido.id %}" class="btn-block btn rounded-0 btn-sm btn-outline-danger">Ver detalle</a></div>
+			</div>
+			{% endif %}
+		{% empty %}
+			<div class="row margin-top_20">
+				<div class="col">
+					<div class="alert alert-info">No tienes ningun pedido aún</div>
+				</div>
+			</div>
+		{% endfor %}
+</div>
+
+

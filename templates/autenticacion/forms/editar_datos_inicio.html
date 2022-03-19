@@ -1,0 +1,25 @@
+{% extends 'carrito/tienda.html' %}
+
+{% block title %}Editar cuenta{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+	<div class="shadow-none mt-5 pt-5 pb-5 mb-5 bg-light rounded-0 pl-5">
+		<h1 class="display-4">Editar datos de sesión</h1>
+	</div>
+	{% block alerta %}
+		{% include 'mensajes/messages.html' %}
+	{% endblock %}
+	<div class="container-xl mb-5">
+    <form method="POST" action="" class="mt-2" autocomplete="off">
+        {% csrf_token %}
+	    Nombre de usuario
+	    <input type="text" class="form-control" value="{{ usuario }}" disabled /> <br>
+        {{ form|crispy }}
+        <br>
+    <button type="submit" class="btn btn-outline-info rounded-0 border-info">Guardar</button>
+    </form>
+	</div>
+{% endblock %}

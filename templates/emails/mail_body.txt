@@ -1,0 +1,4 @@
+Ya casi terminas {{ user.username }} !
+Por favor, haz clic en el siguiente enlace para confirmar la cuenta:
+{{ link }}
+The token expires on {{ expiry|time:"TIME_FORMAT" }}

@@ -1,0 +1,54 @@
+<div class="container-xl margin-top_20 margin-bottom_30">
+	<div class="row">
+		<div class="col-10"><h1 style="color: #138496">Tus consultas ❤</h1></div>
+		<div class="col">
+			<a href="{% url 'consulta-usuario' %}">
+				<button class="btn btn-sm btn-outline-info btn-block rounded-0">Enviar mensaje</button>
+			</a>
+		</div>
+	</div>
+	<div class="margin-top_20 row">
+		<div class="container-fluid text_align_center margin-bottom_20">
+			{% if cantidar >= 1 %}
+				<div class="row">
+					<div class="col-12 alert alert-info">
+						Tienes {{ cantidar }} mensajes en la casilla de entrada
+					</div>
+				</div>
+			{% endif %}
+			<div class="row">
+				<div class="col-3 font-weight-bold">Fecha</div>
+				<div class="col-3 font-weight-bold">Motivo</div>
+				<div class="col-3 font-weight-bold">Acciones</div>
+				<div class="col-3 font-weight-bold">Estado</div>
+			</div>
+			<hr>
+			{% for consulta in consultas %}
+				<div class="row">
+					<div class="col-3">{{ consulta.fecha }}</div>
+					<div class="col-3">{{ consulta.motivo }}</div>
+					<div class="col-3"><a href="{% url 'detalle_consulta' consulta.id %}" target="_blank" class="btn btn-outline-info rounded-0 btn-sm">Ver detalles</a></div>
+					<div class="col-3">
+						{% if consulta.respondida == True %}
+							{% for respuesta in respuestas %}
+								{% if consulta.id == respuesta.consulta.id %}
+									{% if respuesta.visto_mensaje == False %}
+										<p class="text-info alert-info alert padding_0 mt-0">Nuevo mensaje no visto ◼</p>
+									{% else %}
+										<p class="text-info alert alert-secondary padding_0 mt-0">Mensaje visto ✓</p>
+									{% endif %}
+								{% endif %}
+							{% endfor %}
+						{% else %}
+							<p class="text-dark alert alert-dark padding_0 mt-0">Mensaje sin respuesta</p>
+						{% endif %}
+					</div>
+				</div>
+			{% empty %}
+				<div class="row">
+					<div class="col-12 alert alert-info">No tienes consultas realizadas</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>

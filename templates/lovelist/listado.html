@@ -1,0 +1,84 @@
+{% load static %}
+{% load cart_tags %}
+<div class="container-xl margin-top_20">
+	<div class="row">
+		<div class="col-10"><h1 style="color: #138496">Mi Lovelist ❤</h1></div>
+		<div class="col">
+			<a href="{% url 'listado_productos' %}">
+				<button class="btn btn-sm btn-outline-info btn-block rounded-0">Añadir productos</button>
+			</a>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12">
+			<div class="row row-cols-sm-5">
+				{% for lovep in loveproductos %}
+
+					<div class="col-12 col-md-6 col-lg-3 col-xl-3">
+						<div class="card" style="width: 100%; ">
+							<img src="{{ lovep.producto.imagen1.url }}" style="width:100%;"
+							     class="card-img-top"
+							     alt="{{ lovep.producto.nombre }}"/>
+							<div class="card-body">
+								<h5 class="card-title"> {{ lovep.producto.nombre }}</h5>
+								<p class="card-text">{{ lovep.producto.detalle }}</p>
+								<p class="card-text">
+									{% if lovep.producto.stock >= 1 and lovep.producto.disponible == True %}
+										{{ lovep.producto.preciofinal|separador|money_format:'$' }}</p>
+									{% else %}
+										<p class="text-info">Producto no disponible</p>
+									{% endif %}
+								<div class="row">
+									<div class="col-12 padding_0">
+										<a href="{% url 'detalle_producto' lovep.producto.id %}" class="btn btn-sm btn-outline-dark btn-block rounded-0">
+											Ver más detalles
+										</a>
+									</div>
+								</div>
+							</div>
+							<div class='card-footer text-center'>
+								<div class="row">
+									<div class="col-6 padding_0">
+										{% if lovep.producto.stock >= 1 and lovep.producto.disponible == True %}
+											<a href="{% url 'add_producto' lovep.producto.id %}" class="btn btn-sm btn-block btn-outline-info rounded-0">
+												Agregar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-check" viewBox="0 0 16 16">
+												<path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+												<path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+											</svg>
+											</a>
+										{% else %}
+											<button class="btn btn-sm btn-block btn-outline-info rounded-0" disabled>
+												Agregar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart-check" viewBox="0 0 16 16">
+												<path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+												<path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+											</svg>
+											</button>
+										{% endif %}
+									</div>
+									<div class="col-6 padding_0">
+										<a href="{% url 'quitar_producto_love' lovep.producto.id %}">
+											<button id="boton" class="btn-block btn btn-sm btn-outline-danger rounded-0"  title="Quitar del Lovelist">
+												Lovelist <svg width="1em" height="1em" viewBox="0 0 16 16" fill="white"
+												              class="bi bi-suit-heart-fill mi-imagen" xmlns="http://www.w3.org/2000/svg">
+												<path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+											</svg>
+											</button>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+	<div class="row margin-top_20">
+		{% if vacio == True %}
+			<div class="col">
+				<div class="alert alert-info text-info">No existen productos en su lista de deseados</div>
+			</div>
+		{% endif %}
+	</div>
+</div>

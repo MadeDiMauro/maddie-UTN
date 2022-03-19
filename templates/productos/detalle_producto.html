@@ -1,0 +1,280 @@
+{% extends 'carrito/tienda.html' %}
+{% load cart_tags %}
+{% load static %}
+{% block title %}Tienda{% endblock %}
+
+{% block content %}
+	<div class="card rounded-0 mt-5 border-0">
+		<img src="{% static 'banner/bannerGenerico2.png' %}" class="card-img img-responsive rounded-0" style="width: 100%; height: auto">
+		<div class="card-img-overlay rounded-0 d-none d-sm-none d-md-none d-lg-none d-xl-block">
+			<h5 class="display-3" style="color: white;">Shopping</h5>
+		</div>
+		<div class="card-img-overlay rounded-0 d-none d-sm-none d-md-block d-lg-block d-xl-none">
+			<h5 class="display-4" style="color: white;">Shopping</h5>
+		</div>
+		<div class="card-img-overlay rounded-0 d-block d-sm-block d-md-none d-lg-none d-xl-none">
+			<h1 style="color: white;">Shopping</h1>
+		</div>
+	</div>
+	<nav aria-label="breadcrumb rounded-0" class="padding_0">
+        <ol class="breadcrumb rounded-0">
+            <li class="breadcrumb-item"><a href="{% url 'carrito' %}">Inicio</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Shop</li>
+        </ol>
+	</nav>
+
+
+	{% include 'mensajes/messages.html' %}
+
+	<script>
+	$('.carousel').carousel({
+    interval: 2000
+	})
+	</script>
+
+	<div class="container-xl padding_left_right margin-bottom_20 margin-top_30" style="">
+		<div class="row">
+			<div class="col-12 col-md-12 col-xl-6">
+				<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+					<ul class="carousel-indicators">
+						<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+						<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+						<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+					</ul>
+					<div class="d-block d-md-block d-lg-block d-xl-none">
+						<div class="row justify-content-md-center">
+							<div class="col-7 pr-5 pl-5">
+								<div class="carousel-inner">
+									<div class="carousel-item active">
+										<img src="{% if producto.imagen1 %}{{ producto.imagen1.url }}{% else %}{% static 'banner/no-disponible.jpg' %}{% endif %}" class="d-block w-100" style="max-width: 100%; height: auto">
+									</div>
+									<div class="carousel-item">
+										<img src="{% if producto.imagen2 %}{{ producto.imagen2.url }}{% else %}{% static 'banner/no-disponible.jpg' %}{% endif %}" class="d-block w-100" style="max-width: 100%; height: auto">
+									</div>
+									<div class="carousel-item">
+										<img src="{% if producto.imagen3 %}{{ producto.imagen3.url }}{% else %}{% static 'banner/no-disponible.jpg' %}{% endif %}" class="d-block w-100" style="max-width: 100%; height: auto">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="d-none d-md-none d-lg-none d-xl-block">
+						<div class="carousel-inner">
+							<div class="carousel-item active">
+								<img src="{% if producto.imagen1 %}{{ producto.imagen1.url }}{% else %}{% static 'banner/no-disponible.jpg' %}{% endif %}" class="d-block w-100" style="max-width: 100%; height: auto">
+							</div>
+							<div class="carousel-item">
+								<img src="{% if producto.imagen2 %}{{ producto.imagen2.url }}{% else %}{% static 'banner/no-disponible.jpg' %}{% endif %}" class="d-block w-100" style="max-width: 100%; height: auto">
+							</div>
+							<div class="carousel-item">
+								<img src="{% if producto.imagen3 %}{{ producto.imagen3.url }}{% else %}{% static 'banner/no-disponible.jpg' %}{% endif %}" class="d-block w-100" style="max-width: 100%; height: auto">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-12 col-md-12 col-xl-6">
+				<h1 class="text-info" style="color: #138496">{{ producto.nombre|mayus_minus }}</h1>
+				{% if producto.stock >= 1 and producto.disponible == True %}
+				<h1 class="display-4" style="margin-bottom: 5px; color: #138496">{{ producto.preciofinal|separador|money_format:'$' }}</h1>
+				{% else %}
+					<h1 class="display-4" style="margin-bottom: 5px; color: #138496">Producto no disponible</h1>
+				{% endif %}
+				<p class="font-weight-bold">Medios de pago <img style="width: 10%; height: 10%" src="{% static 'svg/metodo-de-pago.svg' %}"/></p>
+				<p>15% de descuento pagando con Efectivo / Depósito o Transferencia Bancaria
+
+					<!-- Modal de medios de pago -->
+					<button type="button" class="btn btn-sm btn-outline-info btn-block rounded-0 border-info" data-toggle="modal" data-target="#exampleModal">
+						Ver medios de pago
+					</button>
+					{% if user.is_authenticated %}
+						{% if producto.stock >= 1 and producto.disponible == True %}
+						<a href="{% url 'add_producto' producto.id %}" class="btn btn-block btn-sm btn-outline-info padding_left_right rounded-0 border-info" style="margin-bottom: 20px">
+							Agregar al carrito
+						</a>
+						{% else %}
+							<button class="btn btn-block btn-sm btn-info padding_left_right rounded-0 border-info" disabled style="margin-bottom: 20px">Agregar al carrito</button>
+						{% endif %}
+						<a href="{% url 'agregar_producto_love' producto.id %}" ><button id="boton" class="btn-block btn btn-sm btn-pink rounded-0"  title="Agregar a Love List">
+							Agregar a mis deseados <svg width="1em" height="1em" viewBox="0 0 16 16" fill="hotpink" class="bi bi-suit-heart-fill mi-imagen" xmlns="http://www.w3.org/2000/svg"><path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/></svg>
+						</button></a>
+						<hr style="padding-top: 0px; padding-bottom: 0px">
+						<h4 class="text-info">Calcular precio de envio</h4>
+						<form class="form-inline" method="get">
+							<input class="form-control mr-sm-2 form-control-sm rounded-0" type="search" placeholder="Ingrese código postal" aria-label="Search" name="buscarcp" value="{{ request.GET.buscarcp }}">
+							<button class="btn btn-outline-info btn-sm rounded-0 border-info" style="" type="submit">Buscar <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-truck" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+								<path fill-rule="evenodd" d="M0 3.5A1.5 1.5 0 0 1 1.5 2h9A1.5 1.5 0 0 1 12 3.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-3.998-.085A1.5 1.5 0 0 1 0 10.5v-7zm1.294 7.456A1.999 1.999 0 0 1 4.732 11h5.536a2.01 2.01 0 0 1 .732-.732V3.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5v7a.5.5 0 0 0 .294.456zM12 10a2 2 0 0 1 1.732 1h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4zm-9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+							</svg></button>
+						</form>
+						<div class="container margin-top_20">
+							{% if opcion == '1' %}
+								{% for transporte in transportes %}
+									<div class="row alert alert-info text-info">
+										<div class="col">Transporte: {{ transporte.nombre }} - Precio tarifa estandar: ${{ transporte.precio_servicio }}</div>
+									</div>
+								{% endfor %}
+							{% endif %}
+							{% if opcion == '2' %}
+								<div class="row col alert alert-info text-info">No se encuentra el código postal</div>
+							{% endif %}
+						</div>
+					{% else %}
+						<a tabindex="0" class="btn btn-lg btn-outline-danger btn-block rounded-0 border-danger" role="button" data-toggle="popover" data-trigger="focus" title="Error al agregar"
+						   data-content="Debes acceder o registrarte para poder comprar en la tienda">
+							<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bag-x-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.5 3.5a2.5 2.5 0 0 1 5 0V4h-5v-.5zm6 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM6.854 8.146a.5.5 0 1 0-.708.708L7.293 10l-1.147 1.146a.5.5 0 0 0 .708.708L8 10.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 10l1.147-1.146a.5.5 0 0 0-.708-.708L8 9.293 6.854 8.146z"/></svg>
+						</a>
+					{% endif %}
+			</div>
+		</div>
+		<div class="container-xl rounded-sm border-bottom border-top border-left border-right">
+			<div class="col col-xl">
+				<h2 class="pt-3" style="color: #0f6674">Descripción del producto</h2>
+				<hr>
+				<p style="text-emphasis: #138496">Marca: {{ producto.marca.nombre|mayus_minus }} - Modelo: {{ producto.modelo.nombre|mayus_minus }}</p>
+				<p>{{ producto.descripcion }}</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-xl mt-5">
+		<hr class="featurette-divider">
+		<div class="row">
+			<div class="col">
+				<p class="display-4 text-info text_align_center">Productos recomendados de {{ temporada }}</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="row">
+					{% for producto in productos_temporada %}
+						<div class="col-12 col-md-6 col-lg-3 col-xl-3">
+							<div class="card rounded-0 shadow-sm" style="width: 100%; margin-bottom: 10%">
+								<img src="
+									{% if producto.producto.imagen1 %}{{ producto.producto.imagen1.url }}{% else %}{% static 'banner/no-disponible.jpg' %}{% endif %}"
+								     style="width:100%;" class="card-img-top"
+								     alt="{{ producto.producto.nombre }}"/>
+								<div class="card-body">
+									<h3 class="card-title">{{ producto.producto.marca.nombre }}
+										- {{ producto.producto.nombre }}</h3>
+									<p class="card-text">{{ producto.producto.detalle }}</p>
+									<h2 class="card-text">{{ producto.producto.preciofinal|separador|money_format:'$' }}</h2>
+									<div class="row">
+										<div class="col-12 padding_0">
+											<a href="{% url 'detalle_producto' producto.producto.id %}"
+											   class="btn btn-sm btn-outline-dark btn-block rounded-0">
+												Ver más detalles
+											</a>
+										</div>
+									</div>
+
+								</div>
+								{% if user.is_authenticated %}
+									<div class='card-footer'>
+										<div class="row">
+											<div class="col-6 padding_0">
+												<a href="{% url 'add_producto' producto.producto.id %}"
+												   class="btn btn-sm btn-block btn-outline-info rounded-0">
+													Agregar
+													<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+													     fill="currentColor" class="bi bi-cart-check" viewBox="0 0 16 16">
+														<path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+														<path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+													</svg>
+												</a>
+											</div>
+											<div class="col-6 padding_0">
+												<a href="{% url 'agregar_producto_love' producto.producto.id %}">
+													<button id="boton" class="btn-block btn btn-sm btn-pink rounded-0"
+													        title="Agregar a Love List">
+														Lovelist
+														<svg width="1em" height="1em" viewBox="0 0 16 16" fill="hotpink"
+														     class="bi bi-suit-heart-fill mi-imagen"
+														     xmlns="http://www.w3.org/2000/svg">
+															<path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1z"/>
+														</svg>
+													</button>
+												</a>
+											</div>
+										</div>
+									</div>
+
+								{% else %}
+									<div class='card-footer text-center'>
+										<a tabindex="0" class="btn btn-lg btn-outline-danger rounded-0 border-danger">
+											<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-bag-x-fill"
+											     fill="currentColor"
+											     xmlns="http://www.w3.org/2000/svg">
+												<path fill-rule="evenodd"
+												      d="M5.5 3.5a2.5 2.5 0 0 1 5 0V4h-5v-.5zm6 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0zM6.854 8.146a.5.5 0 1 0-.708.708L7.293 10l-1.147 1.146a.5.5 0 0 0 .708.708L8 10.707l1.146 1.147a.5.5 0 0 0 .708-.708L8.707 10l1.147-1.146a.5.5 0 0 0-.708-.708L8 9.293 6.854 8.146z"/>
+											</svg>
+										</a>
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					{% empty %}
+						<div class="col-12 mb-xl-5 mt-xl-5">
+							<div class="d-block alert alert-info text-info text_align_center">
+								<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+								     class="bi bi-emoji-dizzy-fill" viewBox="0 0 16 16">
+									<path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zM4.146 5.146a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 1 1 .708.708l-.647.646.647.646a.5.5 0 1 1-.708.708L5.5 7.207l-.646.647a.5.5 0 1 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 0-.708zm5 0a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708.708l-.647.646.647.646a.5.5 0 0 1-.708.708l-.646-.647-.646.647a.5.5 0 1 1-.708-.708l.647-.646-.647-.646a.5.5 0 0 1 0-.708zM8 13a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/>
+								</svg>
+								<br>
+								No existen Productos disponibles por el momento.
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="container-xl padding_left_right">
+				{% include 'paginacion/paginacion.html' %}
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid padding_0 bg-light">
+		<div class="container-xl pb-5 pt-5">
+			<div class="row">
+				<div class="col-12 text_align_center">
+					<h1 class=" pb-0 display-4 text-info">¿Queres saber que producto va con vos ;)?</h1>
+					<h3 class="pb-3 pt-3">Te invitamos a contestar las siguientes preguntas y descubrirlo ❤</h3>
+					<a href="{% url 'test-producto' %}" class="btn btn-outline-info rounded-0 mt-3">Consultar producto recomendado</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title" id="exampleModalLabel">Medios de pago</h3>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h1>Efectivo / Depósito o Transferencia bancaria</h1>
+					<hr>
+					Cuando termines la compra vas a ver la información de pago en relación a esta opción.
+					15% de descuento pagando con Efectivo / Depósito o Transferencia Bancaria.
+					{% if producto.stock >= 1 and producto.disponible == True %}
+					<p class="text-info">Total con descuento: <b class="text-info">{{ producto.preciocosto|preciof:producto.ganancia|des_efectivo|separador|money_format:'$' }}</b></p>
+					{% else %}
+						<p class="text-info">Producto no disponible</p>
+					{% endif %}
+					<br><hr>
+					El descuento será aplicado sobre el costo total de la compra (sin envío) al finalizar la misma.
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-dark rounded-0 border-info" data-dismiss="modal">Cerrar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Fin del modal -->
+
+{% endblock %}
