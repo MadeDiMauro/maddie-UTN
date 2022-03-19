@@ -194,13 +194,13 @@ AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.AllowAllUsersModelBacke
 
 STATIC_URL = '/static/'
 
-""" STATICFILES_DIRS = [
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "statics")
-]  """
+] 
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-STATIC_ROOT = BASE_DIR / "statics"
+""" STATIC_ROOT = BASE_DIR / "static" """
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
