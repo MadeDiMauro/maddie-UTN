@@ -27,7 +27,7 @@ BASE_URL = 'http://127.0.0.1:8000'
 SECRET_KEY = 'mn&@myhrn4hdrbt38^4i2_w!12*l#=!oip4u-f_sykjgd6n-e-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['maddie-makeup.herokuapp.com']
 
