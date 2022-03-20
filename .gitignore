@@ -127,6 +127,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
+myvenv/
 env/
 venv/
 ENV/
@@ -142,6 +143,7 @@ venv.bak/
 
 # mkdocs documentation
 /site
+bd_maddie/
 
 # mypy
 .mypy_cache/
